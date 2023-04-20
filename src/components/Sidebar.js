@@ -3,7 +3,6 @@ import { Draggable } from "react-drag-and-drop";
 import { HiOutlineCloud } from "react-icons/hi2";
 
 export default function Sidebar({ sidebarItems }) {
-    const modalTypes = ["linechart", "barchart", "piechart", "datasource"];
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow">
@@ -41,7 +40,7 @@ export default function Sidebar({ sidebarItems }) {
                                 >
                                     <HiOutlineCloud className="text-white text-2xl"/>
                                     <span className="text-gray-100">
-                                       {modalTypes[3]}
+                                       Datasource
                                     </span>
                                 </a>
                             </li>
