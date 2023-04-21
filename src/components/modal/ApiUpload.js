@@ -1,74 +1,103 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { SuccessAlert, ErrorAlert } from '../global-components/Alert';
 
 export default function ApiUpload(props) {
-  const [url, setUrl] = useState("");
-  const [key, setKey] = useState("");
-  const [status, setStatus] = useState(null);
+    const [url, setUrl] = useState('');
+    const [key, setKey] = useState('');
+    const [status, setStatus] = useState(null);
+    const [data, setData] = useState(null);
 
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value);
-  };
+    const handleUrlChange = (event) => {
+        setUrl(event.target.value);
+    };
 
-  const handleKeyChange = (event) => {
-    setKey(event.target.value);
-  };
+    const handleKeyChange = (event) => {
+        setKey(event.target.value);
+    };
 
-  const handleConnect = () => {
-    fetch(url, {
-      headers: {
-        Authorization: key ? `Bearer ${key}` : undefined,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          setStatus("Connected");
-        } else {
-          setStatus("Connection Failed");
-        }
-      })
-      .catch(() => {
-        setStatus("Connection Failed");
-      });
-  };
+    const handleConnect = () => {
+        fetch(url, {
+            headers: {
+                Authorization: key ? `Bearer ${key}` : undefined
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    setStatus('Connected');
+                    return response.json();
+                } else {
+                    setStatus('Connection Failed');
+                    return Promise.reject(new Error('Connection failed'));
+                }
+            })
+            .then((data) => {
+                setData(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
-  return (
-    <div className="modal-box">
-      <h1 className="font-bold text-2xl">API upload</h1>
-      <div className="my-5 flex flex-col items-center">
-        <label htmlFor="api-url" className="font-bold mb-2">
-          API URL:
-        </label>
-        <input
-          type="text"
-          id="api-url"
-          value={url}
-          onChange={handleUrlChange}
-          className="border border-gray-400 px-2 py-1 rounded-sm mb-5"
-        />
-        <label htmlFor="api-key" className="font-bold mb-2">
-          API Key:
-        </label>
-        <input
-          type="text"
-          id="api-key"
-          value={key}
-          onChange={handleKeyChange}
-          className="border border-gray-400 px-2 py-1 rounded-sm mb-5"
-        />
-        <button onClick={handleConnect} className="btn w-full flex-shrink-0 py-2">
-          Connect
-        </button>
-        {status && (
-          <p className={status === "Connected" ? "text-green-600" : "text-red-600"}>
-            {status}
-          </p>
-        )}
-      </div>
-      <div className="modal-action">
-        <button onClick={props.handleBackClick} className="btn">
-          Back
-        </button>
-      </div>
-    </div>
-  );
+    return (
+        <div className="modal-box">
+            <button
+                id="datasource-modal-close"
+                onClick={props.handleBackClick}
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+                ✕
+            </button>
+            <h1 className="font-bold text-2xl">API upload</h1>
+            <p className="text-lg mb-5">
+                Provide an API url and optionally a key
+            </p>
+            <div className="my-5 flex flex-col">
+                <label htmlFor="api-url" className="font-bold mb-2">
+                    API URL:
+                </label>
+                <input
+                    type="text"
+                    id="api-url"
+                    value={url}
+                    onChange={handleUrlChange}
+                    className="input input-bordered mb-5"
+                />
+                <label htmlFor="api-key" className="font-bold mb-2">
+                    API Key:
+                </label>
+                <input
+                    type="text"
+                    id="api-key"
+                    value={key}
+                    onChange={handleKeyChange}
+                    className="input input-bordered w-full mb-5"
+                />
+                <button
+                    onClick={handleConnect}
+                    className="btn w-full flex-shrink-0 py-2"
+                >
+                    Connect
+                </button>
+                {status === 'Connected' && data !== null ? (
+                    <div>
+                        <SuccessAlert message="API connection successful!" />
+                        <div className="mt-6 max-w-xl">
+                            <h2 className="text-lg font-medium mb-2">
+                                API data
+                            </h2>
+                            <div className="max-h-[350px] overflow-y-auto bg-gray-700 text-gray-100 p-4 rounded-md">
+                                <pre className="text-sm">
+                                    {JSON.stringify(data, null, 2)}
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    status !== null && (
+                        <ErrorAlert message="Error! Could not connect to API." />
+                    )
+                )}
+            </div>
+        </div>
+    );
 }
