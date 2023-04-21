@@ -27,6 +27,7 @@ export default function Modal() {
     };
 
     const handleCloseClick = () => {
+
         setSelectedOption(null);
         setShowCsvUpload(false);
         setShowApiUpload(false);

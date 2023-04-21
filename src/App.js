@@ -1,14 +1,16 @@
 import Sidebar from './components/Sidebar';
 import Modal from './components/modal/Modal';
+import { Droppable } from 'react-drag-and-drop';
 import {
     HiOutlinePresentationChartLine,
     HiOutlineChartBar,
     HiOutlineChartPie
 } from 'react-icons/hi2';
-import { Droppable } from 'react-drag-and-drop';
 
 function App() {
-    const openModal = console.log('open modal');
+    const openModal = () => {
+        console.log('open modal');
+    };
 
     const sidebarItems = [
         {
@@ -43,7 +45,7 @@ function App() {
 
             <Droppable
                 types={['linechart', 'barchart', 'piechart']}
-                onDrop={openModal}
+                onDrop={() => openModal()}
             >
                 <div>
                     <p className="text-bold">Drop here!</p>
