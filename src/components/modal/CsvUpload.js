@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
 
-export function CsvUpload({ handleBackClick }) {
+export default function CsvUpload({ handleBackClick }) {
   const [csvData, setCsvData] = useState(null);
 
   const handleCsvUpload = (e) => {
