@@ -1,6 +1,32 @@
-import React from "react";
-import { Draggable } from "react-drag-and-drop";
-import { HiOutlineCloud } from "react-icons/hi2";
+import React from 'react';
+import { useDrag } from 'react-dnd';
+import { HiOutlineCloud } from 'react-icons/hi2';
+
+function DraggableItem({ type, data, children }) {
+    const [{ isDragging }, drag] = useDrag({
+        type: data,
+        end: (item, monitor) => {
+            const dropResult = monitor.getDropResult();
+            if (item && dropResult) {
+                alert(`You dropped ${type.name} into ${dropResult.name}!`);
+            }
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging()
+        })
+    });
+    const opacity = isDragging ? 0.4 : 1;
+
+    return (
+        <li
+            ref={drag}
+            style={{ opacity }}
+            className={`rounded-sm hover:bg-slate-50 hover:bg-opacity-20`}
+        >
+            {children}
+        </li>
+    );
+}
 
 export default function Sidebar({ sidebarItems }) {
     return (
@@ -14,36 +40,34 @@ export default function Sidebar({ sidebarItems }) {
                     </div>
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            {sidebarItems.map((sidebarItems, index) => (
-                                <Draggable
+                            {sidebarItems.map((sidebarItem, index) => (
+                                <DraggableItem
                                     key={index}
-                                    type={sidebarItems.type}
-                                    data={sidebarItems.trigger}
+                                    type={{ name: sidebarItem.type }}
+                                    data={sidebarItem.type}
                                 >
-                                    <li className="rounded-sm hover:bg-slate-50 hover:bg-opacity-20">
-                                        <a
-                                            href={sidebarItems.link}
-                                            className="flex items-center p-2 space-x-3 rounded-md"
-                                        >
-                                            {sidebarItems.icon}
-                                            <span className="text-gray-100">
-                                                {sidebarItems.text}
-                                            </span>
-                                        </a>
-                                    </li>
-                                </Draggable>
+                                    <a
+                                        href={sidebarItem.link}
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                        {sidebarItem.icon}
+                                        <span className="text-gray-100">
+                                            {sidebarItem.text}
+                                        </span>
+                                    </a>
+                                </DraggableItem>
                             ))}
-                            <li className="rounded-sm hover:bg-slate-50 hover:bg-opacity-20">
+                            <DraggableItem type="datasource" data="datasource">
                                 <a
                                     href="#datasource-modal"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                 >
-                                    <HiOutlineCloud className="text-white text-2xl"/>
+                                    <HiOutlineCloud className="text-white text-2xl" />
                                     <span className="text-gray-100">
-                                       Datasource
+                                        Datasource
                                     </span>
                                 </a>
-                            </li>
+                            </DraggableItem>
                         </ul>
                     </div>
                 </div>
