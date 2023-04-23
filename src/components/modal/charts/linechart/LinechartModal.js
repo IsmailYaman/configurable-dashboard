@@ -3,14 +3,19 @@ import React, { useEffect, useState } from 'react';
 import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
 
-const LineChartModal = (title) => {
+const LineChartModal = () => {
+    const [activeTab, setActiveTab] = useState(1);
+    const [activeButton, setActiveButton] = useState(0);
+    const [title, setTitle] = useState('Linechart');
+    
     useEffect(() => {
         const modal = document.getElementById('linechart-modal');
         modal.checked = true;
     }, []);
 
-    const [activeTab, setActiveTab] = useState(1);
-    const [activeButton, setActiveButton] = useState(0);
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+    };
 
     const handleButtonClick = (buttonIndex) => {
         setActiveButton(buttonIndex);
@@ -29,7 +34,9 @@ const LineChartModal = (title) => {
                         <input
                             type="text"
                             placeholder="New linechart"
-                            className="input input-bordered w-full max-w-xs "
+                            className="input input-bordered w-full max-w-xs"
+                            value={title}
+                            onChange={handleTitleChange}
                         />
                     </div>
                 );
@@ -110,11 +117,11 @@ const LineChartModal = (title) => {
             />
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Linechart</h3>
+                    <h3 className="font-bold text-lg">{title}</h3>
                     <p className="py-4">Preview:</p>
                     <LinechartExample />
                     <div>
-                        <div className="tabs flex justify-center tabs-boxed mt-3">
+                        <div className="tabs flex justify-center tabs-boxed mt-3 py-3">
                             <a
                                 className={`tab ${
                                     activeTab === 1 ? 'tab-active' : ''
