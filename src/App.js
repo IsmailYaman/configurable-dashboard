@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ChartTypes } from './components/ChartTypes';
-import Linechart from './components/modal/charts/linechart/Linechart';
 import LinechartModal from './components/modal/charts/linechart/LinechartModal';
 import BarchartModal from './components/modal/charts/barchart/BarchartModal';
 import PiechartModal from './components/modal/charts/piechart/PiechartModal';
+import Linechart from './components/modal/charts/linechart/Linechart';
 import Modal from './components/modal/Modal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
@@ -13,13 +13,16 @@ import {
     HiOutlineChartPie
 } from 'react-icons/hi2';
 
-function App(linechartData) {
+function App({ chartData }) {
     const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
-    const [showLineChart, setShowLineChart] = useState(false);
+    const [linechart, setLinechart] = useState([]);
 
-    // setShowLineChart(true);
+    const addDataPoint = (dataPoint) => {
+        setLinechart([...linechart, dataPoint]);
+      };
+    
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -32,6 +35,7 @@ function App(linechartData) {
         })
     }));
 
+    
     const isActive = canDrop && isOver;
     let backgroundColor = '#2A303C';
     if (isActive) {
@@ -84,21 +88,24 @@ function App(linechartData) {
                 {showLinechartModal && (
                     <LinechartModal
                         setShowLinechartModal={setShowLinechartModal}
+                        onAddDataPoint={addDataPoint}
                     />
                 )}
                 {showBarchartModal && (
                     <BarchartModal
                         setShowBarchartModal={setShowBarchartModal}
+                        onAddDataPoint={addDataPoint}
                     />
                 )}
                 {showPiechartModal && (
                     <PiechartModal
                         setShowPiechartModal={setShowPiechartModal}
+                        onAddDataPoint={addDataPoint}
                     />
                 )}
             </div>
+            
             <Modal />
-            {showLineChart && <Linechart />}
         </div>
     );
 }
