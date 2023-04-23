@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import CsvUpload from './CsvUpload';
-import ApiUpload from './ApiUpload';
+import CsvUpload from './datasource/CsvUpload';
+import ApiUpload from './datasource/ApiUpload';
 import { ErrorAlert } from '../global-components/Alert';
 
 export default function Modal() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showCsvUpload, setShowCsvUpload] = useState(false);
     const [showApiUpload, setShowApiUpload] = useState(false);
+    // const [showModal, setShowModas] = useState(false);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -27,7 +28,6 @@ export default function Modal() {
     };
 
     const handleCloseClick = () => {
-
         setSelectedOption(null);
         setShowCsvUpload(false);
         setShowApiUpload(false);

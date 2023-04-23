@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SuccessAlert, ErrorAlert } from '../global-components/Alert';
+import { SuccessAlert, ErrorAlert } from '../../global-components/Alert';
 
 export default function ApiUpload(props) {
     const [url, setUrl] = useState('');
@@ -39,7 +39,7 @@ export default function ApiUpload(props) {
     };
 
     return (
-        <div className="modal-box">
+        <div className="modal-box relative">
             <button
                 id="datasource-modal-close"
                 onClick={props.handleBackClick}
