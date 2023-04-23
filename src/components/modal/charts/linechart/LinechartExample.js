@@ -1,6 +1,6 @@
 import { Card, Title, LineChart } from '@tremor/react';
 
-export default function LinechartExample(title) {
+export default function LinechartExample() {
     const chartdata = [
       { time: "11:30", temperature: 18.7 },
       { time: "12:00", temperature: 19.3 },

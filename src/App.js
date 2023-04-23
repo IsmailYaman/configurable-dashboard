@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChartTypes } from './components/ChartTypes';
+import Linechart from './components/modal/charts/linechart/Linechart';
 import LinechartModal from './components/modal/charts/linechart/LinechartModal';
 import BarchartModal from './components/modal/charts/barchart/BarchartModal';
 import PiechartModal from './components/modal/charts/piechart/PiechartModal';
@@ -12,11 +13,13 @@ import {
     HiOutlineChartPie
 } from 'react-icons/hi2';
 
-function App() {
+function App(linechartData) {
     const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
-    
+    const [showLineChart, setShowLineChart] = useState(false);
+
+    // setShowLineChart(true);
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -73,26 +76,29 @@ function App() {
                 style={{ backgroundColor }}
             >
                 <h1 className="text-bold text-center">
-                    {isActive ? 'Drop here' : 'Start by dragging a chart from the sidebar'}
+                    {isActive
+                        ? 'Drop here'
+                        : 'Start by dragging a chart from the sidebar'}
                 </h1>
 
                 {showLinechartModal && (
                     <LinechartModal
-                    setShowLinechartModal={setShowLinechartModal}
+                        setShowLinechartModal={setShowLinechartModal}
                     />
                 )}
                 {showBarchartModal && (
                     <BarchartModal
-                    setShowBarchartModal={setShowBarchartModal}
+                        setShowBarchartModal={setShowBarchartModal}
                     />
                 )}
                 {showPiechartModal && (
                     <PiechartModal
-                    setShowPiechartModal={setShowPiechartModal}
+                        setShowPiechartModal={setShowPiechartModal}
                     />
                 )}
             </div>
             <Modal />
+            {showLineChart && <Linechart />}
         </div>
     );
 }

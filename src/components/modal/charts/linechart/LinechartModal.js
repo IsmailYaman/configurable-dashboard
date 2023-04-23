@@ -2,12 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
+import ModalTabs from '../../ModalTabs';
 
-const LineChartModal = () => {
-    const [activeTab, setActiveTab] = useState(1);
+export default function LineChartModal(linechartData) {
     const [activeButton, setActiveButton] = useState(0);
-    const [title, setTitle] = useState('Linechart');
-    
+    const [isTemperatureChecked, setIsTemperatureChecked] = useState(false);
+    const [isHumidityChecked, setIsHumidityChecked] = useState(false);
+    const [isCo2Checked, setIsCo2Checked] = useState(false);
+    const [title, setTitle] = useState('New linechart');
+
     useEffect(() => {
         const modal = document.getElementById('linechart-modal');
         modal.checked = true;
@@ -20,94 +23,38 @@ const LineChartModal = () => {
     const handleButtonClick = (buttonIndex) => {
         setActiveButton(buttonIndex);
     };
-
-    const handleTabClick = (tabIndex) => {
-        setActiveTab(tabIndex);
+    const handleTemperatureCheck = () => {
+        setIsTemperatureChecked(!isTemperatureChecked);
     };
 
-    const renderTabContent = () => {
-        switch (activeTab) {
-            case 1:
-                return (
-                    <div className="form-control w-full max-w-xs mx-auto py-3">
-                        <p className="font-bold pb-2">Title</p>
-                        <input
-                            type="text"
-                            placeholder="New linechart"
-                            className="input input-bordered w-full max-w-xs"
-                            value={title}
-                            onChange={handleTitleChange}
-                        />
-                    </div>
-                );
-            case 2:
-                return (
-                    <div className="form-control w-full mx-auto max-w-xs py-3">
-                        <p className="font-bold">
-                            Select the data you want to use
-                        </p>
-                        <div className="form-control ">
-                            <label className="label cursor-pointer">
-                                <span className="label-text">Temperature</span>
-                                <input
-                                    type="checkbox"
-                                    checked
-                                    className="checkbox"
-                                />
-                            </label>
-                            <label className="label cursor-pointer">
-                                <span className="label-text">Humidity</span>
-                                <input
-                                    type="checkbox"
-                                    checked
-                                    className="checkbox"
-                                />
-                            </label>
-                            <label className="label cursor-pointer">
-                                <span className="label-text">Co2</span>
-                                <input
-                                    type="checkbox"
-                                    checked
-                                    className="checkbox"
-                                />
-                            </label>
-                        </div>
-                    </div>
-                );
-            case 3:
-                return (
-                    <div className="btn-group btn-group-vertical flex justify-center lg:btn-group-vertical p-3 ">
-                        <button
-                            className={`btn ${
-                                activeButton === 0 ? 'btn-active' : ''
-                            }`}
-                            onClick={() => handleButtonClick(0)}
-                        >
-                            Day
-                        </button>
-                        <button
-                            className={`btn ${
-                                activeButton === 1 ? 'btn-active' : ''
-                            }`}
-                            onClick={() => handleButtonClick(1)}
-                        >
-                            Week
-                        </button>
-                        <button
-                            className={`btn ${
-                                activeButton === 2 ? 'btn-active' : ''
-                            }`}
-                            onClick={() => handleButtonClick(2)}
-                        >
-                            Month
-                        </button>
-                    </div>
-                );
-            default:
-                return null;
-        }
+    const handleHumidityCheck = () => {
+        setIsHumidityChecked(!isHumidityChecked);
     };
 
+    const handleCo2Check = () => {
+        setIsCo2Checked(!isCo2Checked);
+    };
+
+    const handleAddLineChartClick = () => {
+        const lineChartData = {
+            title: title,
+            chartType: 'line',
+            data: {
+                temperature: isTemperatureChecked,
+                humidity: isHumidityChecked,
+                co2: isCo2Checked
+            },
+            timeRange:
+                activeButton === 0
+                    ? 'day'
+                    : activeButton === 1
+                    ? 'week'
+                    : 'month'
+        };
+        console.log(lineChartData);
+
+        return lineChartData;
+    };
     return (
         <>
             <input
@@ -120,51 +67,129 @@ const LineChartModal = () => {
                     <h3 className="font-bold text-lg">{title}</h3>
                     <p className="py-4">Preview:</p>
                     <LinechartExample />
-                    <div>
-                        <div className="tabs flex justify-center tabs-boxed mt-3 py-3">
-                            <a
-                                className={`tab ${
-                                    activeTab === 1 ? 'tab-active' : ''
-                                }`}
-                                onClick={() => handleTabClick(1)}
-                            >
-                                Info
-                            </a>
-                            <a
-                                className={`tab ${
-                                    activeTab === 2 ? 'tab-active' : ''
-                                }`}
-                                onClick={() => handleTabClick(2)}
-                            >
-                                Data
-                            </a>
-                            <a
-                                className={`tab ${
-                                    activeTab === 3 ? 'tab-active' : ''
-                                }`}
-                                onClick={() => handleTabClick(3)}
-                            >
-                                Timeframe
-                            </a>
-                        </div>
-                        <div
-                            className="tab-content rounded-md p-3 mt-2"
-                            style={{ backgroundColor: '#242933' }}
-                        >
-                            {renderTabContent()}
-                        </div>
-                    </div>
+                    <ModalTabs
+                        tabs={[
+                            {
+                                tabIndex: 1,
+                                tabTitle: 'Info',
+                                tabContent: (
+                                    <div className="form-control w-full max-w-xs mx-auto py-3">
+                                        <p className="font-bold pb-2">Title</p>
+                                        <input
+                                            type="text"
+                                            placeholder="New barchart"
+                                            className="input input-bordered w-full max-w-xs"
+                                            value={title}
+                                            onChange={handleTitleChange}
+                                        />
+                                    </div>
+                                )
+                            },
+                            {
+                                tabIndex: 2,
+                                tabTitle: 'Data',
+                                tabContent: (
+                                    <div className="form-control w-full mx-auto max-w-xs py-3">
+                                        <p className="font-bold">
+                                            Select the data you want to use
+                                        </p>
+                                        <div className="form-control ">
+                                            <label className="label cursor-pointer">
+                                                <span className="label-text">
+                                                    Temperature
+                                                </span>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={
+                                                        isTemperatureChecked
+                                                    }
+                                                    className="checkbox"
+                                                    onChange={
+                                                        handleTemperatureCheck
+                                                    }
+                                                />
+                                            </label>
+                                            <label className="label cursor-pointer">
+                                                <span className="label-text">
+                                                    Humidity
+                                                </span>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isHumidityChecked}
+                                                    className="checkbox"
+                                                    onChange={
+                                                        handleHumidityCheck
+                                                    }
+                                                />
+                                            </label>
+                                            <label className="label cursor-pointer">
+                                                <span className="label-text">
+                                                    Co2
+                                                </span>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isCo2Checked}
+                                                    className="checkbox"
+                                                    onChange={handleCo2Check}
+                                                />
+                                            </label>
+                                        </div>
+                                    </div>
+                                )
+                            },
+                            {
+                                tabIndex: 3,
+                                tabTitle: 'Time',
+                                tabContent: (
+                                    <div className="btn-group btn-group-vertical flex justify-center lg:btn-group-vertical p-3 ">
+                                        <button
+                                            className={`btn ${
+                                                activeButton === 0
+                                                    ? 'btn-active'
+                                                    : ''
+                                            }`}
+                                            onClick={() => handleButtonClick(0)}
+                                        >
+                                            Day
+                                        </button>
+                                        <button
+                                            className={`btn ${
+                                                activeButton === 1
+                                                    ? 'btn-active'
+                                                    : ''
+                                            }`}
+                                            onClick={() => handleButtonClick(1)}
+                                        >
+                                            Week
+                                        </button>
+                                        <button
+                                            className={`btn ${
+                                                activeButton === 2
+                                                    ? 'btn-active'
+                                                    : ''
+                                            }`}
+                                            onClick={() => handleButtonClick(2)}
+                                        >
+                                            Month
+                                        </button>
+                                    </div>
+                                )
+                            }
+                        ]}
+                    />
 
                     <div className="modal-action">
-                        <label htmlFor="linechart-modal" className="btn">
+                        {/* Call the handleAddLineChartClick function on button click */}
+                        <button
+                            className="btn"
+                            onClick={handleAddLineChartClick}
+                        >
                             <HiPlusSmall className="text-white text-2xl" /> Add
                             linechart
-                        </label>
+                        </button>
                     </div>
                 </div>
             </div>
         </>
     );
-};
-
-export default LineChartModal;
+}
