@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
-import { Card, Title, LineChart } from '@tremor/react';
+import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
-const LineChartModal = () => {
+
+const LineChartModal = (title) => {
     useEffect(() => {
         const modal = document.getElementById('linechart-modal');
         modal.checked = true;
@@ -99,31 +100,6 @@ const LineChartModal = () => {
                 return null;
         }
     };
-    const chartdata = [
-        {
-            year: 1951,
-            'Population growth rate': 1.74
-        },
-        {
-            year: 1952,
-            'Population growth rate': 1.93
-        },
-        {
-            year: 1953,
-            'Population growth rate': 1.9
-        },
-        {
-            year: 1954,
-            'Population growth rate': 1.98
-        },
-        {
-            year: 1955,
-            'Population growth rate': 2
-        }
-    ];
-
-    const dataFormatter = (number) =>
-        `${Intl.NumberFormat('us').format(number).toString()}%`;
 
     return (
         <>
@@ -135,8 +111,10 @@ const LineChartModal = () => {
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Linechart</h3>
+                    <p className="py-4">Preview:</p>
+                    <LinechartExample />
                     <div>
-                        <div className="tabs flex justify-center tabs-boxed">
+                        <div className="tabs flex justify-center tabs-boxed mt-3">
                             <a
                                 className={`tab ${
                                     activeTab === 1 ? 'tab-active' : ''
@@ -169,19 +147,7 @@ const LineChartModal = () => {
                             {renderTabContent()}
                         </div>
                     </div>
-                    <p className="py-4">Example:</p>
-                    <Card>
-                        <Title>Population growth rate (1951 to 2021)</Title>
-                        <LineChart
-                            className="mt-6"
-                            data={chartdata}
-                            index="year"
-                            categories={['Population growth rate']}
-                            colors={['blue']}
-                            valueFormatter={dataFormatter}
-                            yAxisWidth={40}
-                        />
-                    </Card>
+
                     <div className="modal-action">
                         <label htmlFor="linechart-modal" className="btn">
                             <HiPlusSmall className="text-white text-2xl" /> Add

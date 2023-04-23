@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ChartTypes } from './components/ChartTypes';
 import LinechartModal from './components/modal/charts/linechart/LinechartModal';
 import Modal from './components/modal/Modal';
@@ -10,6 +11,7 @@ import {
 } from 'react-icons/hi2';
 
 function App() {
+    const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -25,9 +27,9 @@ function App() {
     const isActive = canDrop && isOver;
     let backgroundColor = '#2A303C';
     if (isActive) {
-        backgroundColor = 'darkgreen';
+        backgroundColor = 'rgb(173, 173, 173, 0.2)';
     } else if (canDrop) {
-        backgroundColor = 'darkkhaki';
+        backgroundColor = 'rgb(173, 173, 173, 0.4)';
     }
 
     const sidebarItems = [
@@ -52,12 +54,26 @@ function App() {
 
     return (
         <div className="flex flex-wrap">
-            <div className="w-1/4 flex-shrink-0">
-                <Sidebar sidebarItems={sidebarItems} />
+            <div className="flex flex-shrink-0">
+                <Sidebar
+                    sidebarItems={sidebarItems}
+                    setShowLinechartModal={setShowLinechartModal}
+                />
             </div>
-            <div ref={drop} style={{ backgroundColor }}>
-                <p className="text-bold">Drop here!</p>
-            <LinechartModal />
+            <div
+                ref={drop}
+                className="main-content flex-grow h-screen flex justify-center items-center"
+                style={{ backgroundColor }}
+            >
+                <h1 className="text-bold text-center">
+                    {isActive ? 'Drop here' : 'Start by dragging a chart from the sidebar'}
+                </h1>
+
+                {showLinechartModal && (
+                    <LinechartModal
+                        setShowLinechartModal={setShowLinechartModal}
+                    />
+                )}
             </div>
             <Modal />
         </div>

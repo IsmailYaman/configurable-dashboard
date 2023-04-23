@@ -2,19 +2,21 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
 
-export function callModal(sidebarItems) {
-    console.log('This is a ' + sidebarItems.text)
-    console.log(sidebarItems);
-}
+function callModal(sidebarItems, setShowLinechartModal) {
+    if (sidebarItems.type === 'linechart') {
+      setShowLinechartModal(true);
+    }
+  }
+  
 
-function DraggableItems({ type, data, children, sidebarItems }) {
+function DraggableItems({ type, data, children, sidebarItems, setShowLinechartModal}) {
 
     const [{ isDragging }, drag] = useDrag({
         type: data,
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
             if (item && dropResult) {
-                callModal(sidebarItems);
+                callModal(sidebarItems,setShowLinechartModal);
             }
           },
         collect: (monitor) => ({
@@ -44,7 +46,7 @@ function DraggableItems({ type, data, children, sidebarItems }) {
     );
 }
 
-export default function Sidebar({ sidebarItems }) {
+export default function Sidebar({ sidebarItems, setShowLinechartModal }) {
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow">
@@ -54,7 +56,7 @@ export default function Sidebar({ sidebarItems }) {
                             Configurable Dashboard
                         </h2>
                     </div>
-                    <div className="flex-1 h-screen">
+                    <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             {sidebarItems.map((sidebarItem, index) => (
                                 <DraggableItems
@@ -62,6 +64,7 @@ export default function Sidebar({ sidebarItems }) {
                                     type={{ name: sidebarItem.type }}
                                     data={sidebarItem.type}
                                     sidebarItems={sidebarItem}
+                                    setShowLinechartModal={setShowLinechartModal}
                                 />
                             ))}
                             <li className="rounded-sm hover:bg-slate-50 hover:bg-opacity-20">
