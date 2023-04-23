@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ChartTypes } from './components/ChartTypes';
 import LinechartModal from './components/modal/charts/linechart/LinechartModal';
+import BarchartModal from './components/modal/charts/barchart/BarchartModal';
+import PiechartModal from './components/modal/charts/piechart/PiechartModal';
 import Modal from './components/modal/Modal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
@@ -12,6 +14,9 @@ import {
 
 function App() {
     const [showLinechartModal, setShowLinechartModal] = useState(false);
+    const [showBarchartModal, setShowBarchartModal] = useState(false);
+    const [showPiechartModal, setShowPiechartModal] = useState(false);
+    
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -58,6 +63,8 @@ function App() {
                 <Sidebar
                     sidebarItems={sidebarItems}
                     setShowLinechartModal={setShowLinechartModal}
+                    setShowBarchartModal={setShowBarchartModal}
+                    setShowPiechartModal={setShowPiechartModal}
                 />
             </div>
             <div
@@ -71,7 +78,17 @@ function App() {
 
                 {showLinechartModal && (
                     <LinechartModal
-                        setShowLinechartModal={setShowLinechartModal}
+                    setShowLinechartModal={setShowLinechartModal}
+                    />
+                )}
+                {showBarchartModal && (
+                    <BarchartModal
+                    setShowBarchartModal={setShowBarchartModal}
+                    />
+                )}
+                {showPiechartModal && (
+                    <PiechartModal
+                    setShowPiechartModal={setShowPiechartModal}
                     />
                 )}
             </div>

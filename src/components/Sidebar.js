@@ -2,23 +2,43 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
 
-function callModal(sidebarItems, setShowLinechartModal) {
+function callModal(
+    sidebarItems,
+    setShowLinechartModal,
+    setShowBarchartModal,
+    setShowPiechartModal
+) {
     if (sidebarItems.type === 'linechart') {
-      setShowLinechartModal(true);
+        setShowLinechartModal(true);
+    } else if (sidebarItems.type === 'barchart') {
+        setShowBarchartModal(true);
+    } else if (sidebarItems.type === 'piechart') {
+        setShowPiechartModal(true);
     }
-  }
-  
+}
 
-function DraggableItems({ type, data, children, sidebarItems, setShowLinechartModal}) {
-
+function DraggableItems({
+    type,
+    data,
+    children,
+    sidebarItems,
+    setShowLinechartModal,
+    setShowBarchartModal,
+    setShowPiechartModal
+}) {
     const [{ isDragging }, drag] = useDrag({
         type: data,
         end: (item, monitor) => {
-            const dropResult = monitor.getDropResult()
+            const dropResult = monitor.getDropResult();
             if (item && dropResult) {
-                callModal(sidebarItems,setShowLinechartModal);
+                callModal(
+                    sidebarItems,
+                    setShowLinechartModal,
+                    setShowBarchartModal,
+                    setShowPiechartModal
+                );
             }
-          },
+        },
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
         })
@@ -46,7 +66,12 @@ function DraggableItems({ type, data, children, sidebarItems, setShowLinechartMo
     );
 }
 
-export default function Sidebar({ sidebarItems, setShowLinechartModal }) {
+export default function Sidebar({
+    sidebarItems,
+    setShowLinechartModal,
+    setShowBarchartModal,
+    setShowPiechartModal
+}) {
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow">
@@ -64,7 +89,11 @@ export default function Sidebar({ sidebarItems, setShowLinechartModal }) {
                                     type={{ name: sidebarItem.type }}
                                     data={sidebarItem.type}
                                     sidebarItems={sidebarItem}
-                                    setShowLinechartModal={setShowLinechartModal}
+                                    setShowLinechartModal={
+                                        setShowLinechartModal
+                                    }
+                                    setShowBarchartModal={setShowBarchartModal}
+                                    setShowPiechartModal={setShowPiechartModal}
                                 />
                             ))}
                             <li className="rounded-sm hover:bg-slate-50 hover:bg-opacity-20">
