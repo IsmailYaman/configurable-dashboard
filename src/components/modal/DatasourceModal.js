@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CsvUpload from './datasource/CsvUpload';
 import ApiUpload from './datasource/ApiUpload';
 import { ErrorAlert } from '../global-components/Alert';
 
-export default function Modal() {
+export default function DatasourceModal() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showCsvUpload, setShowCsvUpload] = useState(false);
     const [showApiUpload, setShowApiUpload] = useState(false);
-    // const [showModal, setShowModas] = useState(false);
+
+    useEffect(() => {
+        const modal = document.getElementById('datasource-modal');
+        modal.checked = true;
+    }, []);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -28,7 +32,9 @@ export default function Modal() {
     };
 
     const handleCloseClick = () => {
-        setSelectedOption(null);
+        const modal = document.getElementById('datasource-modal');
+        modal.checked = false;
+        console.log("clicked");
         setShowCsvUpload(false);
         setShowApiUpload(false);
     };
@@ -57,7 +63,7 @@ export default function Modal() {
                 return (
                     <div className="modal-box relative">
                         <button
-                            id="datasource-modal-close"
+                             id='datasource-modal'
                             onClick={handleCloseClick}
                             className="btn btn-sm btn-circle absolute right-2 top-2"
                         >

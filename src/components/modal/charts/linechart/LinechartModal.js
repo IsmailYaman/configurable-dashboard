@@ -4,7 +4,7 @@ import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
 import ModalTabs from '../../ModalTabs';
 
-export default function LineChartModal({ onAddDataPoint }) {
+export default function LineChartModal({ addLinechart, onCreate }) {
     const [activeButton, setActiveButton] = useState(0);
     const [isTemperatureChecked, setIsTemperatureChecked] = useState(false);
     const [isHumidityChecked, setIsHumidityChecked] = useState(false);
@@ -44,10 +44,13 @@ export default function LineChartModal({ onAddDataPoint }) {
                     ? 'week'
                     : 'month'
         };
-        onAddDataPoint(linechartData);
+        // onAddDataPoint(linechartData);
         console.log(linechartData);
+        addLinechart = true
+        console.log(addLinechart);
         modal.checked = false;
-        return linechartData;
+        onCreate(linechartData)
+        // return linechartData;
     };
     return (
         <div>

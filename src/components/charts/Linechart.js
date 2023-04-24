@@ -25,19 +25,21 @@ export default function Linechart() {
 
     const dataFormatter = (number) =>
         `${Intl.NumberFormat('us').format(number).toString()}%`;
-        
+
     return (
-        <Card>
-            <Title>Population growth rate (1951 to 2021)</Title>
-            <LineChart
-                className="mt-6"
-                data={chartdata}
-                index="year"
-                categories={['Population growth rate']}
-                colors={['blue']}
-                valueFormatter={dataFormatter}
-                yAxisWidth={40}
-            />
-        </Card>
+        <div className="m-3">
+            <Card className="">
+                <Title>Population growth rate (1951 to 2021)</Title>
+                <LineChart
+                    className="mt-6"
+                    data={chartdata}
+                    index="year"
+                    categories={['Population growth rate']}
+                    colors={['blue']}
+                    valueFormatter={dataFormatter}
+                    yAxisWidth={40}
+                />
+            </Card>
+        </div>
     );
 }

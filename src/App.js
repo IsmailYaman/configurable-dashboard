@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { ChartTypes } from './components/ChartTypes';
 import LinechartModal from './components/modal/charts/linechart/LinechartModal';
 import BarchartModal from './components/modal/charts/barchart/BarchartModal';
 import PiechartModal from './components/modal/charts/piechart/PiechartModal';
 import Linechart from './components/charts/Linechart';
-import Modal from './components/modal/Modal';
+import Modal from './components/modal/DatasourceModal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
 import {
@@ -13,16 +13,13 @@ import {
     HiOutlineChartPie
 } from 'react-icons/hi2';
 
-function App({ chartData }) {
+function App() {
     const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
-    const [linechart, setLinechart] = useState([]);
+    const [elements, setElements] = useState([]);
 
-    const addDataPoint = (dataPoint) => {
-        setLinechart([...linechart, dataPoint]);
-      };
-    
+    console.log(elements);
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -35,7 +32,6 @@ function App({ chartData }) {
         })
     }));
 
-    
     const isActive = canDrop && isOver;
     let backgroundColor = '#2A303C';
     if (isActive) {
@@ -44,11 +40,15 @@ function App({ chartData }) {
         backgroundColor = 'rgb(173, 173, 173, 0.4)';
     }
 
+    const renderElement = useCallback((el) => {
+        if (el.chartType === 'line') {
+            return <Linechart />;
+        }
+    }, []);
+
     const sidebarItems = [
         {
-            icon: (
-                <HiOutlinePresentationChartLine className="text-white text-2xl" />
-            ),
+            icon: <HiOutlinePresentationChartLine className="text-white text-2xl" />,
             text: 'Linechart',
             type: 'linechart'
         },
@@ -76,35 +76,38 @@ function App({ chartData }) {
             </div>
             <div
                 ref={drop}
-                className="main-content flex-grow h-screen flex justify-center items-center"
+                className="main-content flex-grow h-screen flex"
                 style={{ backgroundColor }}
             >
-                <h1 className="text-bold text-center">
-                    {isActive
-                        ? 'Drop here'
-                        : 'Start by dragging a chart from the sidebar'}
-                </h1>
-
+                {/* {addLinechart === false ? (
+                    <Linechart />
+                ) : (
+                    <h1 className="text-bold text-center">
+                        {isActive
+                            ? 'Drop here'
+                            : 'Start by dragging a chart from the sidebar'}
+                    </h1>
+                )} */}
+                {elements.map(renderElement)}
                 {showLinechartModal && (
                     <LinechartModal
+                        onCreate={(el) => setElements((els) => [...els, el])}
                         setShowLinechartModal={setShowLinechartModal}
-                        onAddDataPoint={addDataPoint}
                     />
                 )}
                 {showBarchartModal && (
                     <BarchartModal
+                        onCreate={(el) => setElements((els) => [...els, el])}
                         setShowBarchartModal={setShowBarchartModal}
-                        onAddDataPoint={addDataPoint}
                     />
                 )}
                 {showPiechartModal && (
                     <PiechartModal
+                        onCreate={(el) => setElements((els) => [...els, el])}
                         setShowPiechartModal={setShowPiechartModal}
-                        onAddDataPoint={addDataPoint}
                     />
                 )}
             </div>
-            
             <Modal />
         </div>
     );
