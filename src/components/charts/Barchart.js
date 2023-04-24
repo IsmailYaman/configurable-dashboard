@@ -27,7 +27,7 @@ export default function Barchart() {
         `${Intl.NumberFormat('us').format(number).toString()}%`;
 
     return (
-        <div className="m-3">
+        <div className="m-3  lg:w-1/2 md:w-full lg:flex-grow">
             <Card>
                 <Title>Population growth rate (1951 to 2021)</Title>
                 <BarChart

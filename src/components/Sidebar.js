@@ -73,7 +73,7 @@ export default function Sidebar({
     setShowPiechartModal
 }) {
     return (
-        <div className="flex">
+        <div className="w-1/6 h-full">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow">
                 <div className="space-y-3">
                     <div className="flex items-center">

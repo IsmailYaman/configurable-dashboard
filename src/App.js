@@ -73,18 +73,16 @@ function App() {
     ];
 
     return (
-        <div className="flex flex-wrap">
-            <div className="flex flex-shrink-0">
+        <div className="flex h-screen">
                 <Sidebar
                     sidebarItems={sidebarItems}
                     setShowLinechartModal={setShowLinechartModal}
                     setShowBarchartModal={setShowBarchartModal}
                     setShowPiechartModal={setShowPiechartModal}
                 />
-            </div>
             <div
                 ref={drop}
-                className="main-content flex-grow h-screen flex flex-wrap"
+                className="main-content h-full w-5/6"
                 style={{ backgroundColor }}
             >
                 {elements.map(renderElement)}
@@ -110,6 +108,10 @@ function App() {
             <Modal />
         </div>
     );
+
+
+
+
 }
 
 export default App;
