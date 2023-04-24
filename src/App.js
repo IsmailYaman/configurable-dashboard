@@ -3,7 +3,7 @@ import { ChartTypes } from './components/ChartTypes';
 import LinechartModal from './components/modal/charts/linechart/LinechartModal';
 import BarchartModal from './components/modal/charts/barchart/BarchartModal';
 import PiechartModal from './components/modal/charts/piechart/PiechartModal';
-import Linechart from './components/modal/charts/linechart/Linechart';
+import Linechart from './components/charts/Linechart';
 import Modal from './components/modal/Modal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
