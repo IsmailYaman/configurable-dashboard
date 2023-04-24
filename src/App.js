@@ -4,6 +4,8 @@ import LinechartModal from './components/modal/charts/linechart/LinechartModal';
 import BarchartModal from './components/modal/charts/barchart/BarchartModal';
 import PiechartModal from './components/modal/charts/piechart/PiechartModal';
 import Linechart from './components/charts/Linechart';
+import Barchart from './components/charts/Barchart';
+import Piechart from './components/charts/Piechart';
 import Modal from './components/modal/DatasourceModal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
@@ -43,12 +45,18 @@ function App() {
     const renderElement = useCallback((el) => {
         if (el.chartType === 'line') {
             return <Linechart />;
+        } else if (el.chartType === 'bar') {
+            return <Barchart />;
+        } else if (el.chartType === 'pie') {
+            return <Piechart />;
         }
     }, []);
 
     const sidebarItems = [
         {
-            icon: <HiOutlinePresentationChartLine className="text-white text-2xl" />,
+            icon: (
+                <HiOutlinePresentationChartLine className="text-white text-2xl" />
+            ),
             text: 'Linechart',
             type: 'linechart'
         },
@@ -76,18 +84,9 @@ function App() {
             </div>
             <div
                 ref={drop}
-                className="main-content flex-grow h-screen flex"
+                className="main-content flex-grow h-screen flex flex-wrap"
                 style={{ backgroundColor }}
             >
-                {/* {addLinechart === false ? (
-                    <Linechart />
-                ) : (
-                    <h1 className="text-bold text-center">
-                        {isActive
-                            ? 'Drop here'
-                            : 'Start by dragging a chart from the sidebar'}
-                    </h1>
-                )} */}
                 {elements.map(renderElement)}
                 {showLinechartModal && (
                     <LinechartModal
