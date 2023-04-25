@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
 
@@ -24,47 +24,62 @@ function DraggableItems({
     sidebarItems,
     setShowLinechartModal,
     setShowBarchartModal,
-    setShowPiechartModal
-}) {
+    setShowPiechartModal,
+  }) {
     const [{ isDragging }, drag] = useDrag({
-        type: data,
-        end: (item, monitor) => {
-            const dropResult = monitor.getDropResult();
-            if (item && dropResult) {
-                callModal(
-                    sidebarItems,
-                    setShowLinechartModal,
-                    setShowBarchartModal,
-                    setShowPiechartModal
-                );
-            }
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging()
-        })
+      type: data,
+      end: (item, monitor) => {
+        const dropResult = monitor.getDropResult();
+        if (item && dropResult) {
+          callModal(
+            sidebarItems,
+            setShowLinechartModal,
+            setShowBarchartModal,
+            setShowPiechartModal
+          );
+        }
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     });
+  
+    const [isMouseDown, setIsMouseDown] = useState(false);
+  
+    const handleMouseDown = () => {
+      setIsMouseDown(true);
+    };
+  
+    const handleMouseUp = () => {
+      setIsMouseDown(false);
+    };
+  
     const opacity = isDragging ? 0.4 : 1;
-
+    const cursor = isMouseDown ? "cursor-grabbing" : "cursor-grab";
+  
     return (
-        <li
-            ref={drag}
-            style={{ opacity }}
-            className={`rounded-sm hover:bg-slate-50 hover:bg-opacity-20`}
-        >
-            {children ? (
-                children
-            ) : (
-                <a
-                    href={sidebarItems.link}
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                    {sidebarItems.icon}
-                    <span className="text-gray-100">{sidebarItems.text}</span>
-                </a>
-            )}
-        </li>
+      <li
+        ref={drag}
+        style={{ opacity }}
+        className={`rounded-sm hover:bg-slate-50 hover:bg-opacity-20 ${cursor}`}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+      >
+        {children ? (
+          children
+        ) : (
+          <a
+            href={sidebarItems.link}
+            className="flex items-center p-2 space-x-3 rounded-md"
+          >
+            {sidebarItems.icon}
+            <span className="text-gray-100">{sidebarItems.text}</span>
+          </a>
+        )}
+      </li>
     );
-}
+  }
+  
 
 export default function Sidebar({
     sidebarItems,
@@ -83,6 +98,18 @@ export default function Sidebar({
                     </div>
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
+                            <li className="rounded-sm bg-slate-600 bottom-0 hover:bg-slate-50 hover:bg-opacity-20">
+                                <a
+                                    href="#datasource-modal"
+                                    className="flex items-center p-2 space-x-3 rounded-md"
+                                >
+                                    <HiOutlineCloud className="text-white text-2xl" />
+                                    <span className="text-gray-100">
+                                        Datasource
+                                    </span>
+                                    <div className="badge badge-accent">CSV: Office stats</div>
+                                </a>
+                            </li>
                             {sidebarItems.map((sidebarItem, index) => (
                                 <DraggableItems
                                     key={index}
@@ -96,17 +123,6 @@ export default function Sidebar({
                                     setShowPiechartModal={setShowPiechartModal}
                                 />
                             ))}
-                            <li className="rounded-sm hover:bg-slate-50 hover:bg-opacity-20">
-                                <a
-                                    href="#datasource-modal"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                    <HiOutlineCloud className="text-white text-2xl" />
-                                    <span className="text-gray-100">
-                                        Datasource
-                                    </span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>

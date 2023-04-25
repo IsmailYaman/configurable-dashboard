@@ -74,18 +74,24 @@ function App() {
 
     return (
         <div className="flex h-screen">
-                <Sidebar
-                    sidebarItems={sidebarItems}
-                    setShowLinechartModal={setShowLinechartModal}
-                    setShowBarchartModal={setShowBarchartModal}
-                    setShowPiechartModal={setShowPiechartModal}
-                />
+            <Sidebar
+                sidebarItems={sidebarItems}
+                setShowLinechartModal={setShowLinechartModal}
+                setShowBarchartModal={setShowBarchartModal}
+                setShowPiechartModal={setShowPiechartModal}
+            />
             <div
                 ref={drop}
                 className="main-content h-full w-5/6"
                 style={{ backgroundColor }}
             >
-                {elements.map(renderElement)}
+                {elements.length === 0 ? (
+                    <div className="flex items-center justify-center h-full text-gray-500">
+                        Drag and drop here
+                    </div>
+                ) : (
+                    elements.map(renderElement)
+                )}
                 {showLinechartModal && (
                     <LinechartModal
                         onCreate={(el) => setElements((els) => [...els, el])}
@@ -105,13 +111,10 @@ function App() {
                     />
                 )}
             </div>
+
             <Modal />
         </div>
     );
-
-
-
-
 }
 
 export default App;
