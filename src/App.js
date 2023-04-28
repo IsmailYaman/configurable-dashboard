@@ -9,19 +9,15 @@ import Piechart from './components/charts/Piechart';
 import Modal from './components/modal/DatasourceModal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
-import {
-    HiOutlinePresentationChartLine,
-    HiOutlineChartBar,
-    HiOutlineChartPie
-} from 'react-icons/hi2';
+import { AiOutlineLineChart, AiOutlineBarChart, AiOutlinePieChart} from 'react-icons/ai';
 
 function App() {
     const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
-    const [elements, setElements] = useState([]);
+    const [charts, setCharts] = useState([]);
 
-    console.log(elements);
+    console.log(charts);
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -42,7 +38,7 @@ function App() {
         backgroundColor = 'rgb(173, 173, 173, 0.4)';
     }
 
-    const renderElement = useCallback((el) => {
+    const renderChart = useCallback((el) => {
         if (el.chartType === 'line') {
             return <Linechart />;
         } else if (el.chartType === 'bar') {
@@ -55,18 +51,18 @@ function App() {
     const sidebarItems = [
         {
             icon: (
-                <HiOutlinePresentationChartLine className="text-white text-2xl" />
+                <AiOutlineLineChart className="text-white text-2xl" />
             ),
             text: 'Linechart',
             type: 'linechart'
         },
         {
-            icon: <HiOutlineChartBar className="text-white text-2xl" />,
+            icon: <AiOutlineBarChart className="text-white text-2xl" />,
             text: 'Barchart',
             type: 'barchart'
         },
         {
-            icon: <HiOutlineChartPie className="text-white text-2xl" />,
+            icon: <AiOutlinePieChart className="text-white text-2xl" />,
             text: 'Piechart',
             type: 'piechart'
         }
@@ -82,31 +78,31 @@ function App() {
             />
             <div
                 ref={drop}
-                className="main-content h-full w-5/6"
+                className="main-content w-full grid grid-rows-4 grid-flow-col gap-4"
                 style={{ backgroundColor }}
             >
-                {elements.length === 0 ? (
-                    <div className="flex items-center justify-center h-full text-gray-500">
+                {charts.length === 0 ? (
+                    <div className="flex items-center mx-auto justify-center h-full text-gray-500">
                         Drag and drop here
                     </div>
                 ) : (
-                    elements.map(renderElement)
+                    charts.map(renderChart)
                 )}
                 {showLinechartModal && (
                     <LinechartModal
-                        onCreate={(el) => setElements((els) => [...els, el])}
+                        onCreate={(el) => setCharts((els) => [...els, el])}
                         setShowLinechartModal={setShowLinechartModal}
                     />
                 )}
                 {showBarchartModal && (
                     <BarchartModal
-                        onCreate={(el) => setElements((els) => [...els, el])}
+                        onCreate={(el) => setCharts((els) => [...els, el])}
                         setShowBarchartModal={setShowBarchartModal}
                     />
                 )}
                 {showPiechartModal && (
                     <PiechartModal
-                        onCreate={(el) => setElements((els) => [...els, el])}
+                        onCreate={(el) => setCharts((els) => [...els, el])}
                         setShowPiechartModal={setShowPiechartModal}
                     />
                 )}
