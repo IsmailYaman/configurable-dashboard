@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
+import InDevelopment from './global-components/InDevelopmentAlert';
 
 function callModal(
     sidebarItems,
@@ -18,7 +19,6 @@ function callModal(
 }
 
 function DraggableItems({
-    type,
     data,
     children,
     sidebarItems,
@@ -56,7 +56,7 @@ function DraggableItems({
         setIsMouseDown(false);
     };
 
-    const opacity = isDragging ? 'opacity-30': 'opacity-100';
+    const opacity = isDragging ? 'opacity-30' : 'opacity-100';
     const cursor = isMouseDown ? 'cursor-grab' : '';
 
     return (
@@ -112,7 +112,7 @@ export default function Sidebar({
                             </li>
                         </ul>
                         <hr className="mb-4 h-0.5 border-t-0 bg-slate-500 opacity-100 dark:opacity-50" />
-                        <span className='pb-3 block'>Widgets</span>
+                        <span className="pb-3 block">Widgets</span>
                         <ul className="grid  grid-cols-2 gap-2">
                             {sidebarItems.map((sidebarItem, index) => (
                                 <DraggableItems
@@ -128,6 +128,11 @@ export default function Sidebar({
                                 />
                             ))}
                         </ul>
+                    </div>
+                </div>
+                <div className="relative h-screen">
+                    <div className="absolute bottom-0">
+                        <InDevelopment className="" />
                     </div>
                 </div>
             </div>
