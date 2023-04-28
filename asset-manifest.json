@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/configurable-dashboard/static/css/main.4cb42d68.css",
+    "main.js": "/configurable-dashboard/static/js/main.30829c47.js",
+    "index.html": "/configurable-dashboard/index.html",
+    "main.4cb42d68.css.map": "/configurable-dashboard/static/css/main.4cb42d68.css.map",
+    "main.30829c47.js.map": "/configurable-dashboard/static/js/main.30829c47.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4cb42d68.css",
+    "static/js/main.30829c47.js"
+  ]
+}
