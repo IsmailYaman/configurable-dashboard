@@ -1,11 +1,11 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 export default function InDevelopment() {
-    const [showAlert, setShowAlert] = useState(true);
+    // const [showAlert, setShowAlert] = useState(true);
 
-    const handleClick = () => {
-        setShowAlert(false);
-    };
+    // const handleClick = () => {
+    //     setShowAlert(false);
+    // };
     return (
         <div>
             {/* {showAlert && ( */}

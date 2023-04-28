@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
 import InDevelopment from './global-components/InDevelopmentAlert';
@@ -26,8 +25,6 @@ function DraggableItems({
     setShowBarchartModal,
     setShowPiechartModal
 }) {
-    const [isMouseDown, setIsMouseDown] = useState(false);
-
     const [{ isDragging }, drag] = useDrag({
         type: data,
         end: (item, monitor) => {
@@ -46,25 +43,14 @@ function DraggableItems({
         })
     });
 
-    const handleMouseDown = () => {
-        console.log('mouse down!');
-        setIsMouseDown(true);
-    };
-
-    const handleMouseUp = () => {
-        console.log('mouse up!');
-        setIsMouseDown(false);
-    };
-
-    const opacity = isDragging ? 'opacity-30' : 'opacity-100';
-    const cursor = isMouseDown ? 'cursor-grab' : '';
+    const opacity = isDragging
+        ? 'opacity-30 cursor-grabbing'
+        : 'opacity-100 cursor-grab';
 
     return (
         <li
             ref={drag}
-            className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 hover:cursor-grab ${cursor} ${opacity}`}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 } ${opacity} `}
         >
             {children ? (
                 children
