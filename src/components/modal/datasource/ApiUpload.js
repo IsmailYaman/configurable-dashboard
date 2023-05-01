@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SuccessAlert, ErrorAlert } from '../../global-components/Alert';
 
-export default function ApiUpload(props) {
+export default function ApiUpload(props, handleBackClick) {
     const [url, setUrl] = useState('');
     const [key, setKey] = useState('');
     const [status, setStatus] = useState(null);
@@ -72,31 +72,58 @@ export default function ApiUpload(props) {
                     onChange={handleKeyChange}
                     className="input input-bordered w-full mb-5"
                 />
-                <button
-                    onClick={handleConnect}
-                    className="btn w-full flex-shrink-0 py-2"
-                >
-                    Connect
-                </button>
                 {status === 'Connected' && data !== null ? (
-                    <div>
-                        <SuccessAlert message="API connection successful!" />
-                        <div className="mt-6 max-w-xl">
-                            <h2 className="text-lg font-medium mb-2">
-                                API data
-                            </h2>
-                            <div className="max-h-[350px] overflow-y-auto bg-gray-700 text-gray-100 p-4 rounded-md">
-                                <pre className="text-sm">
-                                    {JSON.stringify(data, null, 2)}
-                                </pre>
+                    <button
+                        onClick={handleConnect}
+                        className="btn w-full flex-shrink-0 py-2 disabled"
+                    >
+                        Connect
+                    </button>
+                ) : (
+                    <button
+                        onClick={handleConnect}
+                        className="btn w-full flex-shrink-0 py-2 "
+                    >
+                        Connect
+                    </button>
+                )}
+
+                {status === 'Connected' && data !== null ? (
+                    <>
+                        <h2 className="text-lg font-medium mb-2 mt-4">
+                            Choose a name for your datasource
+                        </h2>
+                        <input
+                            type="text"
+                            placeholder="Choose a name"
+                            className="input input-bordered w-full "
+                        />
+                        <div>
+                            <SuccessAlert message="API connection successful!" />
+                            <div className="mt-6 max-w-xl">
+                                <h2 className="text-lg font-medium mb-2">
+                                    API data
+                                </h2>
+                                <div className="max-h-[350px] overflow-y-auto bg-gray-700 text-gray-100 p-4 rounded-md">
+                                    <pre className="text-sm">
+                                        {JSON.stringify(data, null, 2)}
+                                    </pre>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <button
+                        className="btn float-right mt-3"
+                        onClick={handleBackClick}
+                    >
+                        Save
+                    </button>
+                    </>
                 ) : (
                     status !== null && (
                         <ErrorAlert message="Error! Could not connect to API." />
                     )
                 )}
+                
             </div>
         </div>
     );

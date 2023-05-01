@@ -9,7 +9,12 @@ import Piechart from './components/charts/Piechart';
 import Modal from './components/modal/DatasourceModal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
-import { AiOutlineLineChart, AiOutlineBarChart, AiOutlinePieChart} from 'react-icons/ai';
+import {
+    AiOutlineLineChart,
+    AiOutlineBarChart,
+    AiOutlinePieChart
+} from 'react-icons/ai';
+import GridField from './GridField';
 
 function App() {
     const [showLinechartModal, setShowLinechartModal] = useState(false);
@@ -38,21 +43,19 @@ function App() {
         backgroundColor = 'rgb(173, 173, 173, 0.4)';
     }
 
-    const renderChart = useCallback((el) => {
-        if (el.chartType === 'line') {
+    const renderChart = useCallback((element) => {
+        if (element.chartType === 'line') {
             return <Linechart />;
-        } else if (el.chartType === 'bar') {
+        } else if (element.chartType === 'bar') {
             return <Barchart />;
-        } else if (el.chartType === 'pie') {
+        } else if (element.chartType === 'pie') {
             return <Piechart />;
         }
     }, []);
 
     const sidebarItems = [
         {
-            icon: (
-                <AiOutlineLineChart className="text-white text-2xl" />
-            ),
+            icon: <AiOutlineLineChart className="text-white text-2xl" />,
             text: 'Linechart',
             type: 'linechart'
         },
@@ -69,7 +72,7 @@ function App() {
     ];
 
     return (
-        <div className="flex h-screen">
+        <div className="flex">
             <Sidebar
                 sidebarItems={sidebarItems}
                 setShowLinechartModal={setShowLinechartModal}
@@ -77,32 +80,50 @@ function App() {
                 setShowPiechartModal={setShowPiechartModal}
             />
             <div
-                ref={drop}
-                className="main-content w-full grid grid-rows-4 grid-flow-col gap-4"
+                className="main-content w-screen h-screen"
                 style={{ backgroundColor }}
             >
                 {charts.length === 0 ? (
-                    <div className="flex items-center mx-auto justify-center h-full text-gray-500">
-                        Drag and drop here
+                    <div ref={drop} className="grid grid-cols-4 h-screen gap-2 p-2">
+                        <strong className='absolute top-0 right-0 bottom-0 left-0 m-auto w-60 h-12'>Drag and drop a widget here.</strong>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
+                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
                     </div>
+                    // this should be just <GridField ref={drop} />
                 ) : (
                     charts.map(renderChart)
                 )}
                 {showLinechartModal && (
                     <LinechartModal
-                        onCreate={(el) => setCharts((els) => [...els, el])}
+                        onCreate={(element) =>
+                            setCharts((elements) => [...elements, element])
+                        }
                         setShowLinechartModal={setShowLinechartModal}
                     />
                 )}
                 {showBarchartModal && (
                     <BarchartModal
-                        onCreate={(el) => setCharts((els) => [...els, el])}
+                        onCreate={(element) =>
+                            setCharts((elements) => [...elements, element])
+                        }
                         setShowBarchartModal={setShowBarchartModal}
                     />
                 )}
                 {showPiechartModal && (
                     <PiechartModal
-                        onCreate={(el) => setCharts((els) => [...els, el])}
+                        onCreate={(element) =>
+                            setCharts((elements) => [...elements, element])
+                        }
                         setShowPiechartModal={setShowPiechartModal}
                     />
                 )}
