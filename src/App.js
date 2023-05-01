@@ -17,6 +17,7 @@ import {
 import GridField from './GridField';
 
 function App() {
+    
     const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
