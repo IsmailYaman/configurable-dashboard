@@ -21,8 +21,9 @@ function App() {
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
     const [charts, setCharts] = useState([]);
+    const [datasources, setDatasources] = useState([]);
 
-    console.log(charts);
+    console.log(datasources);
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -78,6 +79,7 @@ function App() {
                 setShowLinechartModal={setShowLinechartModal}
                 setShowBarchartModal={setShowBarchartModal}
                 setShowPiechartModal={setShowPiechartModal}
+                onDatasourceSave={ds => setDatasources([...datasources, ds])}
             />
             <div
                 className="main-content w-screen h-screen"
@@ -129,7 +131,7 @@ function App() {
                 )}
             </div>
 
-            <Modal />
+            <Modal onSave={ds => setDatasources([...datasources, ds])}/>
         </div>
     );
 }

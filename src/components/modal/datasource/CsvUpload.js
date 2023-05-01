@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Papa from 'papaparse';
 import { SuccessAlert, ErrorAlert } from '../../global-components/Alert';
 
-export default function CsvUpload({ handleBackClick }) {
+export default function CsvUpload({ handleBackClick, onSubmit }) {
     const [csvData, setCsvData] = useState(null);
     const [alert, setAlert] = useState(null);
     // const [submit, setSubmit] = useState(false);
@@ -63,8 +63,8 @@ export default function CsvUpload({ handleBackClick }) {
             {csvData && (
                 <div className="mt-6 max-w-xl">
                     <h2 className="text-lg font-medium mb-2 mt-4">
-                               Choose a name for your datasource
-                            </h2>
+                        Choose a name for your datasource
+                    </h2>
                     <input
                         type="text"
                         placeholder="Choose a name"
@@ -78,7 +78,7 @@ export default function CsvUpload({ handleBackClick }) {
                     </div>
                     <button
                         className="btn float-right mt-3"
-                        onClick={handleBackClick}
+                        onClick={() => onSubmit(csvData)}
                     >
                         Save
                     </button>

@@ -72,24 +72,16 @@ export default function ApiUpload(props, handleBackClick) {
                     onChange={handleKeyChange}
                     className="input input-bordered w-full mb-5"
                 />
-                {status === 'Connected' && data !== null ? (
-                    <button
-                        onClick={handleConnect}
-                        className="btn w-full flex-shrink-0 py-2 disabled"
-                    >
-                        Connect
-                    </button>
-                ) : (
                     <button
                         onClick={handleConnect}
                         className="btn w-full flex-shrink-0 py-2 "
                     >
                         Connect
                     </button>
-                )}
 
                 {status === 'Connected' && data !== null ? (
                     <>
+                        <SuccessAlert message="API connection successful!" />
                         <h2 className="text-lg font-medium mb-2 mt-4">
                             Choose a name for your datasource
                         </h2>
@@ -99,7 +91,6 @@ export default function ApiUpload(props, handleBackClick) {
                             className="input input-bordered w-full "
                         />
                         <div>
-                            <SuccessAlert message="API connection successful!" />
                             <div className="mt-6 max-w-xl">
                                 <h2 className="text-lg font-medium mb-2">
                                     API data
@@ -113,7 +104,7 @@ export default function ApiUpload(props, handleBackClick) {
                         </div>
                         <button
                         className="btn float-right mt-3"
-                        onClick={handleBackClick}
+                        onClick={props.handleBackClick}
                     >
                         Save
                     </button>

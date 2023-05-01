@@ -3,15 +3,15 @@ import CsvUpload from './datasource/CsvUpload';
 import ApiUpload from './datasource/ApiUpload';
 import { ErrorAlert } from '../global-components/Alert';
 
-export default function DatasourceModal() {
+export default function DatasourceModal({onSave, open, onClose}) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showCsvUpload, setShowCsvUpload] = useState(false);
     const [showApiUpload, setShowApiUpload] = useState(false);
-
-    useEffect(() => {
-        const modal = document.getElementById('datasource-modal');
-        modal.checked = true;
-    }, []);
+    console.log(open)
+    // useEffect(() => {
+    //     const modal = document.getElementById('datasource-modal');
+    //     modal.checked = true;
+    // }, []);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -33,8 +33,9 @@ export default function DatasourceModal() {
 
     const handleCloseClick = () => {
         const modal = document.getElementById('datasource-modal');
-        modal.checked = false;
         console.log("clicked");
+        console.log(modal.checked);
+        modal.checked = false;
         setShowCsvUpload(false);
         setShowApiUpload(false);
     };
@@ -45,7 +46,7 @@ export default function DatasourceModal() {
                 return showCsvUpload ? (
                     <CsvUpload
                         handleBackClick={handleBackClick}
-                        onSubmit={() => {}}
+                        onSubmit={(ds) => {onSave(ds); onClose()}}
                     />
                 ) : (
                     <ErrorAlert message={'Something went wrong!'} />
@@ -62,13 +63,9 @@ export default function DatasourceModal() {
             default:
                 return (
                     <div className="modal-box relative">
-                        <button
-                             id='datasource-modal'
-                            onClick={handleCloseClick}
-                            className="btn btn-sm btn-circle absolute right-2 top-2"
-                        >
-                            ✕
-                        </button>
+                         {/* <label htmlFor="datasource-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label> */}
+                         <button onClick={onClose} htmlFor="datasource-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
+                        
                         <h1 className="font-bold text-2xl">Datasource</h1>
                         <p className=" text-lg">
                             Please select a datasource to use.
@@ -91,9 +88,8 @@ export default function DatasourceModal() {
                 );
         }
     };
-
     return (
-        <div className="modal" id="datasource-modal">
+        <div className={`modal ${open ? 'modal-open' : ''}`} id="datasource-modal">
             {renderContent()}
         </div>
     );

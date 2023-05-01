@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
 import InDevelopment from './global-components/InDevelopmentAlert';
+import Modal from './modal/DatasourceModal';
 
 function callModal(
     sidebarItems,
@@ -71,55 +73,64 @@ export default function Sidebar({
     sidebarItems,
     setShowLinechartModal,
     setShowBarchartModal,
-    setShowPiechartModal
+    setShowPiechartModal,
+    onDatasourceSave
 }) {
+    const [open, setOpen] = useState(false);
+
     return (
-            <div className="flex flex-col p-3 h-screen bg-gray-800 shadow">
-                <div className="space-y-3">
-                    <div className="flex items-center">
-                        <h2 className="font-bold text-white">
-                            Configurable Dashboard
-                        </h2>
-                    </div>
-                    <div className="flex-1">
-                        <ul className="pt-2 pb-4 text-sm">
-                            <li className="rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20">
-                                <a
-                                    href="#datasource-modal"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                    <HiOutlineCloud className="text-white text-2xl" />
-                                    <span className="text-gray-100">
-                                        Datasource
-                                    </span>
-                                    {/* <div className="badge badge-accent">CSV: Office stats</div> */}
-                                </a>
-                            </li>
-                        </ul>
-                        <hr className="mb-4 h-0.5 border-t-0 bg-slate-500 opacity-100 dark:opacity-50" />
-                        <span className="pb-3 block">Widgets</span>
-                        <ul className="grid  grid-cols-2 gap-2">
-                            {sidebarItems.map((sidebarItem, index) => (
-                                <DraggableItems
-                                    key={index}
-                                    type={{ name: sidebarItem.type }}
-                                    data={sidebarItem.type}
-                                    sidebarItems={sidebarItem}
-                                    setShowLinechartModal={
-                                        setShowLinechartModal
-                                    }
-                                    setShowBarchartModal={setShowBarchartModal}
-                                    setShowPiechartModal={setShowPiechartModal}
-                                />
-                            ))}
-                        </ul>
-                    </div>
+        <div className="flex flex-col p-3 h-screen bg-gray-800 shadow">
+            <div className="space-y-3">
+                <div className="flex items-center">
+                    <h2 className="font-bold text-white">
+                        Configurable Dashboard
+                    </h2>
                 </div>
-                <div className="relative h-full">
-                    <div className="absolute bottom-0">
-                        <InDevelopment/>
-                    </div>
+                <div className="flex-1">
+                    <ul className="pt-2 pb-4 text-sm">
+                        <li className="rounded-sm flex items-center p-2 bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 hover:cursor-pointer">
+                            <HiOutlineCloud className="text-white text-2xl mr-2" />
+                            <span
+                                className="text-gray-100"
+                                onClick={() => setOpen(true)}
+                            >
+                                Datasource
+                            </span>
+                            <input
+                                type="checkbox"
+                                id="datasource-modal"
+                                className="modal-toggle"
+                            />
+                        
+                            <Modal
+                                onSave={onDatasourceSave}
+                                open={open}
+                                onClose={() => setOpen(false)}
+                            />
+                        </li>
+                    </ul>
+                    <hr className="mb-4 h-0.5 border-t-0 bg-slate-500 opacity-100 dark:opacity-50" />
+                    <span className="pb-3 block">Widgets</span>
+                    <ul className="grid  grid-cols-2 gap-2">
+                        {sidebarItems.map((sidebarItem, index) => (
+                            <DraggableItems
+                                key={index}
+                                type={{ name: sidebarItem.type }}
+                                data={sidebarItem.type}
+                                sidebarItems={sidebarItem}
+                                setShowLinechartModal={setShowLinechartModal}
+                                setShowBarchartModal={setShowBarchartModal}
+                                setShowPiechartModal={setShowPiechartModal}
+                            />
+                        ))}
+                    </ul>
                 </div>
             </div>
+            <div className="relative h-full">
+                <div className="absolute bottom-0">
+                    <InDevelopment />
+                </div>
+            </div>
+        </div>
     );
 }
