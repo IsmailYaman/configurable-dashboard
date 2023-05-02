@@ -7,7 +7,7 @@ import Linechart from './components/charts/Linechart';
 import Barchart from './components/charts/Barchart';
 import Piechart from './components/charts/Piechart';
 import Modal from './components/modal/datasource/DatasourceModal';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/sidebar/Sidebar';
 import { useDrop } from 'react-dnd';
 import {
     AiOutlineLineChart,
@@ -17,7 +17,6 @@ import {
 import GridField from './GridField';
 
 function App() {
-    
     const [showLinechartModal, setShowLinechartModal] = useState(false);
     const [showBarchartModal, setShowBarchartModal] = useState(false);
     const [showPiechartModal, setShowPiechartModal] = useState(false);
@@ -80,33 +79,14 @@ function App() {
                 setShowLinechartModal={setShowLinechartModal}
                 setShowBarchartModal={setShowBarchartModal}
                 setShowPiechartModal={setShowPiechartModal}
-                onDatasourceSave={ds => setDatasources([...datasources, ds])}
+                onDatasourceSave={(ds) => setDatasources([...datasources, ds])}
             />
             <div
                 ref={drop}
-                className="main-content w-screen h-screen"
+                className="main-content w-screen h-screen p-6 grid-flow-dense sm:grid-cols-1 grid-cols-4 gap-5"
                 style={{ backgroundColor }}
             >
-                {charts.length === 0 ? (
-                    <div className="grid grid-cols-4 h-screen gap-2 p-2">
-                        <strong className='absolute top-0 right-0 bottom-0 left-0 m-auto w-60 h-12'>Drag and drop a widget here.</strong>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                        <div className="bg-slate-800 bg-opacity-50 rounded-sm"></div>
-                    </div>
-                    // this should be just <GridField ref={drop} />
-                ) : (
-                    charts.map(renderChart)
-                )}
+                {charts.length === 0 ? <GridField /> : charts.map(renderChart)}
                 {showLinechartModal && (
                     <LinechartModal
                         onCreate={(element) =>
@@ -133,7 +113,7 @@ function App() {
                 )}
             </div>
 
-            <Modal onSave={ds => setDatasources([...datasources, ds])}/>
+            <Modal onSave={(ds) => setDatasources([...datasources, ds])} />
         </div>
     );
 }

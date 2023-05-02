@@ -27,8 +27,8 @@ export default function Linechart() {
         `${Intl.NumberFormat('us').format(number).toString()}%`;
 
     return (
-        <div className="m-3">
-            <Card className="">
+        <div>
+            <Card>
                 <Title>Population growth rate (1951 to 2021)</Title>
                 <LineChart
                     className="mt-6"

@@ -13,7 +13,7 @@ export default function PieChartExample() {
     const valueFormatter = (number) =>
         `$ ${Intl.NumberFormat('us').format(number).toString()}`;
     return (
-        <div className='m-3'>
+        <div>
             <Card>
                 <Title>Sales</Title>
                 <DonutChart

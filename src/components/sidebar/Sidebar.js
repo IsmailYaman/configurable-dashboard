@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
-import InDevelopment from './global-components/InDevelopmentAlert';
-import Modal from './modal/datasource/DatasourceModal';
+import InDevelopment from '../global-components/InDevelopmentAlert';
+import Modal from '../modal/datasource/DatasourceModal';
+import Title from './Title';
 
 function callModal(
     sidebarItems,
@@ -82,9 +83,7 @@ export default function Sidebar({
         <div className="flex flex-col p-3 h-screen bg-gray-800 shadow">
             <div className="space-y-3">
                 <div className="flex items-center">
-                    <h2 className="font-bold text-white">
-                        Configurable Dashboard
-                    </h2>
+                    <Title />
                 </div>
                 <div className="flex-1">
                     <ul className="pt-2 pb-4 text-sm">
