@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 
-const ModalTabs = ({ tabs }) => {
+const Tabs = ({ tabs }) => {
     const [activeTab, setActiveTab] = useState(1);
 
     const handleTabClick = (tabIndex) => {
@@ -39,4 +39,4 @@ const ModalTabs = ({ tabs }) => {
     );
 };
 
-export default ModalTabs;
+export default Tabs;

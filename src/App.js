@@ -6,7 +6,7 @@ import PiechartModal from './components/modal/charts/piechart/PiechartModal';
 import Linechart from './components/charts/Linechart';
 import Barchart from './components/charts/Barchart';
 import Piechart from './components/charts/Piechart';
-import Modal from './components/modal/DatasourceModal';
+import Modal from './components/modal/datasource/DatasourceModal';
 import Sidebar from './components/Sidebar';
 import { useDrop } from 'react-dnd';
 import {

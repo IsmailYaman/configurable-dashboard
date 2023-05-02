@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PiechartExample from './PiechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
-import ModalTabs from '../../ModalTabs';
+import Tabs from '../../Tabs';
 
 export default function PieChartModal({ addPiechart, onCreate }) {
     const [activeButton, setActiveButton] = useState(0);
@@ -46,10 +46,10 @@ export default function PieChartModal({ addPiechart, onCreate }) {
         };
         // onAddDataPoint(piechartData);
         console.log(piechartData);
-        addPiechart = true
+        addPiechart = true;
         console.log(addPiechart);
         modal.checked = false;
-        onCreate(piechartData)
+        onCreate(piechartData);
         // return piechartData;
     };
     return (
@@ -65,7 +65,7 @@ export default function PieChartModal({ addPiechart, onCreate }) {
                         <h3 className="font-bold text-lg">{title}</h3>
                         <p className="py-4">Preview:</p>
                         <PiechartExample />
-                        <ModalTabs
+                        <Tabs
                             tabs={[
                                 {
                                     tabIndex: 1,

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import BarchartExample from './BarchartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
-import ModalTabs from '../../ModalTabs';
+import Tabs from '../../Tabs';
 
 export default function BarChartModal({ addBarchart, onCreate }) {
     const [activeButton, setActiveButton] = useState(0);
@@ -46,10 +46,10 @@ export default function BarChartModal({ addBarchart, onCreate }) {
         };
         // onAddDataPoint(barchartData);
         console.log(barchartData);
-        addBarchart = true
+        addBarchart = true;
         console.log(addBarchart);
         modal.checked = false;
-        onCreate(barchartData)
+        onCreate(barchartData);
         // return barchartData;
     };
     return (
@@ -65,7 +65,7 @@ export default function BarChartModal({ addBarchart, onCreate }) {
                         <h3 className="font-bold text-lg">{title}</h3>
                         <p className="py-4">Preview:</p>
                         <BarchartExample />
-                        <ModalTabs
+                        <Tabs
                             tabs={[
                                 {
                                     tabIndex: 1,

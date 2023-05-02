@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import CsvUpload from './datasource/CsvUpload';
-import ApiUpload from './datasource/ApiUpload';
-import { ErrorAlert } from '../global-components/Alert';
+import CsvUpload from './CsvUpload';
+import ApiUpload from './ApiUpload';
+import { ErrorAlert } from '../../global-components/Alert';
 
-export default function DatasourceModal({onSave, open, onClose}) {
+export default function DatasourceModal({ onSave, open, onClose }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showCsvUpload, setShowCsvUpload] = useState(false);
     const [showApiUpload, setShowApiUpload] = useState(false);
-    console.log(open)
+    console.log(open);
     // useEffect(() => {
     //     const modal = document.getElementById('datasource-modal');
     //     modal.checked = true;
@@ -31,14 +31,14 @@ export default function DatasourceModal({onSave, open, onClose}) {
         setSelectedOption(null);
     };
 
-    const handleCloseClick = () => {
-        const modal = document.getElementById('datasource-modal');
-        console.log("clicked");
-        console.log(modal.checked);
-        modal.checked = false;
-        setShowCsvUpload(false);
-        setShowApiUpload(false);
-    };
+    // const handleCloseClick = () => {
+    //     const modal = document.getElementById('datasource-modal');
+    //     console.log('clicked');
+    //     console.log(modal.checked);
+    //     modal.checked = false;
+    //     setShowCsvUpload(false);
+    //     setShowApiUpload(false);
+    // };
 
     const renderContent = () => {
         switch (selectedOption) {
@@ -46,7 +46,10 @@ export default function DatasourceModal({onSave, open, onClose}) {
                 return showCsvUpload ? (
                     <CsvUpload
                         handleBackClick={handleBackClick}
-                        onSubmit={(ds) => {onSave(ds); onClose()}}
+                        onSubmit={(ds) => {
+                            onSave(ds);
+                            onClose();
+                        }}
                     />
                 ) : (
                     <ErrorAlert message={'Something went wrong!'} />
@@ -63,9 +66,15 @@ export default function DatasourceModal({onSave, open, onClose}) {
             default:
                 return (
                     <div className="modal-box relative">
-                         {/* <label htmlFor="datasource-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label> */}
-                         <button onClick={onClose} htmlFor="datasource-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
-                        
+                        {/* <label htmlFor="datasource-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label> */}
+                        <button
+                            onClick={onClose}
+                            htmlFor="datasource-modal"
+                            className="btn btn-sm btn-circle absolute right-2 top-2"
+                        >
+                            ✕
+                        </button>
+
                         <h1 className="font-bold text-2xl">Datasource</h1>
                         <p className=" text-lg">
                             Please select a datasource to use.
@@ -89,7 +98,10 @@ export default function DatasourceModal({onSave, open, onClose}) {
         }
     };
     return (
-        <div className={`modal ${open ? 'modal-open' : ''}`} id="datasource-modal">
+        <div
+            className={`modal ${open ? 'modal-open' : ''}`}
+            id="datasource-modal"
+        >
             {renderContent()}
         </div>
     );

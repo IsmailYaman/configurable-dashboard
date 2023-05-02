@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { HiOutlineCloud } from 'react-icons/hi2';
 import InDevelopment from './global-components/InDevelopmentAlert';
-import Modal from './modal/DatasourceModal';
+import Modal from './modal/datasource/DatasourceModal';
 
 function callModal(
     sidebarItems,
@@ -101,7 +101,7 @@ export default function Sidebar({
                                 id="datasource-modal"
                                 className="modal-toggle"
                             />
-                        
+
                             <Modal
                                 onSave={onDatasourceSave}
                                 open={open}

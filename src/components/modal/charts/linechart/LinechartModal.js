@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
-import ModalTabs from '../../ModalTabs';
+import Tabs from '../../Tabs';
 
 export default function LineChartModal({ addLinechart, onCreate }) {
     const [activeButton, setActiveButton] = useState(0);
@@ -46,10 +46,10 @@ export default function LineChartModal({ addLinechart, onCreate }) {
         };
         // onAddDataPoint(linechartData);
         console.log(linechartData);
-        addLinechart = true
+        addLinechart = true;
         console.log(addLinechart);
         modal.checked = false;
-        onCreate(linechartData)
+        onCreate(linechartData);
         // return linechartData;
     };
     return (
@@ -65,7 +65,7 @@ export default function LineChartModal({ addLinechart, onCreate }) {
                         <h3 className="font-bold text-lg">{title}</h3>
                         <p className="py-4">Preview:</p>
                         <LinechartExample />
-                        <ModalTabs
+                        <Tabs
                             tabs={[
                                 {
                                     tabIndex: 1,
