@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CsvUpload from './CsvUpload';
 import ApiUpload from './ApiUpload';
 import { ErrorAlert } from '../../global-components/Alert';
@@ -7,11 +7,7 @@ export default function DatasourceModal({ onSave, open, onClose }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showCsvUpload, setShowCsvUpload] = useState(false);
     const [showApiUpload, setShowApiUpload] = useState(false);
-    console.log(open);
-    // useEffect(() => {
-    //     const modal = document.getElementById('datasource-modal');
-    //     modal.checked = true;
-    // }, []);
+    // console.log(open);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -30,15 +26,6 @@ export default function DatasourceModal({ onSave, open, onClose }) {
         }
         setSelectedOption(null);
     };
-
-    // const handleCloseClick = () => {
-    //     const modal = document.getElementById('datasource-modal');
-    //     console.log('clicked');
-    //     console.log(modal.checked);
-    //     modal.checked = false;
-    //     setShowCsvUpload(false);
-    //     setShowApiUpload(false);
-    // };
 
     const renderContent = () => {
         switch (selectedOption) {

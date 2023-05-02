@@ -15,7 +15,7 @@ export default function Title() {
         setValue(event.target.value);
     };
     return (
-        <h1 onDoubleClick={handleDoubleClick} onBlur={handleBlur}>
+        <div onDoubleClick={handleDoubleClick} onBlur={handleBlur}>
             {editable ? (
                 <input
                     type="text"
@@ -24,8 +24,8 @@ export default function Title() {
                     onChange={handleChange}
                 />
             ) : (
-                <h2 className="font-bold text-white">{value}</h2>
+                <h1 className="font-bold text-white">{value}</h1>
             )}
-        </h1>
+        </div>
     );
 }

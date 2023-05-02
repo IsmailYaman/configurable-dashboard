@@ -1,16 +1,16 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
 import Tabs from '../../Tabs';
 
-export default function LineChartModal({ addLinechart, onCreate }) {
+export default function LineChartModal({ addLinechart, onCreate, data }) {
     const [activeButton, setActiveButton] = useState(0);
     const [isTemperatureChecked, setIsTemperatureChecked] = useState(false);
     const [isHumidityChecked, setIsHumidityChecked] = useState(false);
     const [isCo2Checked, setIsCo2Checked] = useState(false);
     const [title, setTitle] = useState('New linechart');
 
+    // const chartData = data[0].map((data) => data.temperature);
     useEffect(() => {
         const modal = document.getElementById('linechart-modal');
         modal.checked = true;

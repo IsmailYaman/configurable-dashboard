@@ -23,7 +23,8 @@ function App() {
     const [charts, setCharts] = useState([]);
     const [datasources, setDatasources] = useState([]);
 
-    console.log(datasources);
+    console.log('The data:', datasources);
+
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ChartTypes.LINECHART,
@@ -83,7 +84,11 @@ function App() {
             />
             <div
                 ref={drop}
-                className="main-content w-screen h-screen p-6 grid-flow-dense sm:grid-cols-1 grid-cols-4 gap-5"
+                className={
+                    charts.length === 0
+                        ? 'main-content w-screen h-screen'
+                        : 'main-content w-screen  p-6 grid grid-cols-12 gap-5'
+                }
                 style={{ backgroundColor }}
             >
                 {charts.length === 0 ? <GridField /> : charts.map(renderChart)}
@@ -93,6 +98,7 @@ function App() {
                             setCharts((elements) => [...elements, element])
                         }
                         setShowLinechartModal={setShowLinechartModal}
+                        data={datasources}
                     />
                 )}
                 {showBarchartModal && (

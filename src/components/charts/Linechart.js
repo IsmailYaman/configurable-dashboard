@@ -27,7 +27,7 @@ export default function Linechart() {
         `${Intl.NumberFormat('us').format(number).toString()}%`;
 
     return (
-        <div>
+        <div className="lg:col-span-6  md:col-span-12">
             <Card>
                 <Title>Population growth rate (1951 to 2021)</Title>
                 <LineChart
