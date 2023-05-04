@@ -121,18 +121,28 @@ function App() {
                 )}
                 {showBarchartModal && (
                     <BarchartModal
+                        selectedOptions={selectedOptions}
+                        setSelectedOptions={setSelectedOptions}
+                        open={open}
+                        onClose={() => setOpen(false)}
                         onCreate={(element) =>
                             setCharts((elements) => [...elements, element])
                         }
-                        setShowBarchartModal={setShowBarchartModal}
+                        setShowLinechartModal={setShowLinechartModal}
+                        data={datasources}
                     />
                 )}
                 {showPiechartModal && (
                     <PiechartModal
+                        selectedOptions={selectedOptions}
+                        setSelectedOptions={setSelectedOptions}
+                        open={open}
+                        onClose={() => setOpen(false)}
                         onCreate={(element) =>
                             setCharts((elements) => [...elements, element])
                         }
-                        setShowPiechartModal={setShowPiechartModal}
+                        setShowLinechartModal={setShowLinechartModal}
+                        data={datasources}
                     />
                 )}
             </div>

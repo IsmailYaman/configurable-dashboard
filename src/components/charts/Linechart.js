@@ -1,4 +1,5 @@
 import { Card, Title, LineChart } from '@tremor/react';
+import { TimeFormatter } from '../global-components/TimeFormatter';
 export default function Linechart({ datasources, selectedOptions }) {
     console.log('linechart', datasources);
     // const chartdata = datasources.map((item) => { //werkt (gedeeltelijk) met api alleen
@@ -23,7 +24,7 @@ export default function Linechart({ datasources, selectedOptions }) {
                 <LineChart
                     className="mt-6"
                     data={[...chartdata]}
-                    index={'timestamp'}
+                    index={<TimeFormatter timestamp={'timestamp'} />}
                     categories={selectedOptions}
                     colors={['red']}
                     valueFormatter={dataFormatter}

@@ -12,6 +12,7 @@ export default function LineChartModal({
     const [activeButton, setActiveButton] = useState(0);
     const [title, setTitle] = useState('New linechart');
 
+    // const chartData = data[0].map((data) => data.temperature);
     useEffect(() => {
         const modal = document.getElementById('linechart-modal');
         modal.checked = true;
@@ -50,9 +51,10 @@ export default function LineChartModal({
                     ? 'week'
                     : 'month'
         };
-        // console.log(linechartData);
+        // onAddDataPoint(linechartData);
+        console.log(linechartData);
         addLinechart = true;
-        // console.log(addLinechart);
+        console.log(addLinechart);
         modal.checked = false;
         onCreate(linechartData);
         // return linechartData;
@@ -139,7 +141,7 @@ export default function LineChartModal({
                                                 </label>
                                                 <label className="label cursor-pointer">
                                                     <span className="label-text">
-                                                        Co2
+                                                        Carbondioxide
                                                     </span>
                                                     <input
                                                         type="checkbox"

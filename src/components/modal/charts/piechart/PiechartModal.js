@@ -1,10 +1,14 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import PiechartExample from './PiechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
 import Tabs from '../../Tabs';
 
-export default function PieChartModal({ addPiechart, onCreate }) {
+export default function PieChartModal({
+    addPiechart,
+    onCreate,
+    selectedOptions,
+    setSelectedOptions
+}) {
     const [activeButton, setActiveButton] = useState(0);
     const [isTemperatureChecked, setIsTemperatureChecked] = useState(false);
     const [isHumidityChecked, setIsHumidityChecked] = useState(false);
@@ -35,7 +39,7 @@ export default function PieChartModal({ addPiechart, onCreate }) {
             data: {
                 temperature: isTemperatureChecked,
                 humidity: isHumidityChecked,
-                co2: isCo2Checked
+                carbondioxide: isCo2Checked
             },
             timeRange:
                 activeButton === 0
