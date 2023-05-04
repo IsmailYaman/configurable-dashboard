@@ -3,11 +3,14 @@ import LinechartExample from './LinechartExample';
 import { HiPlusSmall } from 'react-icons/hi2';
 import Tabs from '../../Tabs';
 
-export default function LineChartModal({ addLinechart, onCreate, data }) {
+export default function LineChartModal({
+    addLinechart,
+    onCreate,
+    data,
+    selectedOptions,
+    setSelectedOptions
+}) {
     const [activeButton, setActiveButton] = useState(0);
-    const [isTemperatureChecked, setIsTemperatureChecked] = useState(false);
-    const [isHumidityChecked, setIsHumidityChecked] = useState(false);
-    const [isCo2Checked, setIsCo2Checked] = useState(false);
     const [title, setTitle] = useState('New linechart');
 
     // const chartData = data[0].map((data) => data.temperature);
@@ -16,11 +19,12 @@ export default function LineChartModal({ addLinechart, onCreate, data }) {
         modal.checked = true;
     }, []);
 
-    const handleItemsChange = (event) => {
-        setIsTemperatureChecked(!isTemperatureChecked);
-        setIsHumidityChecked(!isHumidityChecked);
-        setIsCo2Checked(!isCo2Checked);
-        setTitle(event.target.value);
+    const handleItemsChange = (type) => {
+        if (selectedOptions.indexOf(type) === -1) {
+            setSelectedOptions([...selectedOptions, type]);
+        } else {
+            setSelectedOptions(selectedOptions.filter((item) => item !== type));
+        }
     };
 
     const handleButtonClick = (buttonIndex) => {
@@ -33,9 +37,13 @@ export default function LineChartModal({ addLinechart, onCreate, data }) {
             title: title,
             chartType: 'line',
             data: {
-                temperature: isTemperatureChecked,
-                humidity: isHumidityChecked,
-                co2: isCo2Checked
+                temperature: selectedOptions.some(
+                    (item) => item === 'temperature'
+                ),
+                humidity: selectedOptions.some((item) => item === 'humidity'),
+                carbondioxide: selectedOptions.some(
+                    (item) => item === 'carbondioxide'
+                )
             },
             timeRange:
                 activeButton === 0
@@ -45,9 +53,9 @@ export default function LineChartModal({ addLinechart, onCreate, data }) {
                     : 'month'
         };
         // onAddDataPoint(linechartData);
-        console.log(linechartData);
+        // console.log(linechartData);
         addLinechart = true;
-        console.log(addLinechart);
+        // console.log(addLinechart);
         modal.checked = false;
         onCreate(linechartData);
         // return linechartData;
@@ -100,12 +108,16 @@ export default function LineChartModal({ addLinechart, onCreate, data }) {
                                                     </span>
                                                     <input
                                                         type="checkbox"
-                                                        checked={
-                                                            isTemperatureChecked
-                                                        }
+                                                        checked={selectedOptions.some(
+                                                            (item) =>
+                                                                item ===
+                                                                'temperature'
+                                                        )}
                                                         className="checkbox"
-                                                        onChange={
-                                                            handleItemsChange
+                                                        onChange={() =>
+                                                            handleItemsChange(
+                                                                'temperature'
+                                                            )
                                                         }
                                                     />
                                                 </label>
@@ -115,12 +127,16 @@ export default function LineChartModal({ addLinechart, onCreate, data }) {
                                                     </span>
                                                     <input
                                                         type="checkbox"
-                                                        checked={
-                                                            isHumidityChecked
-                                                        }
+                                                        checked={selectedOptions.some(
+                                                            (item) =>
+                                                                item ===
+                                                                'humidity'
+                                                        )}
                                                         className="checkbox"
-                                                        onChange={
-                                                            handleItemsChange
+                                                        onChange={() =>
+                                                            handleItemsChange(
+                                                                'humidity'
+                                                            )
                                                         }
                                                     />
                                                 </label>
@@ -130,10 +146,16 @@ export default function LineChartModal({ addLinechart, onCreate, data }) {
                                                     </span>
                                                     <input
                                                         type="checkbox"
-                                                        checked={isCo2Checked}
+                                                        checked={selectedOptions.some(
+                                                            (item) =>
+                                                                item ===
+                                                                'carbondioxide'
+                                                        )}
                                                         className="checkbox"
-                                                        onChange={
-                                                            handleItemsChange
+                                                        onChange={() =>
+                                                            handleItemsChange(
+                                                                'carbondioxide'
+                                                            )
                                                         }
                                                     />
                                                 </label>

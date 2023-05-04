@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { SuccessAlert, ErrorAlert } from '../../global-components/Alert';
 
-export default function ApiUpload(props, handleBackClick) {
+export default function ApiUpload({ handleBackClick, onSubmit }) {
+    const [apiData, setApiData] = useState({});
     const [url, setUrl] = useState('');
     const [key, setKey] = useState('');
     const [status, setStatus] = useState(null);
@@ -24,6 +25,7 @@ export default function ApiUpload(props, handleBackClick) {
             .then((response) => {
                 if (response.ok) {
                     setStatus('Connected');
+
                     return response.json();
                 } else {
                     setStatus('Connection Failed');
@@ -32,6 +34,7 @@ export default function ApiUpload(props, handleBackClick) {
             })
             .then((data) => {
                 setData(data);
+                setApiData(data);
             })
             .catch((error) => {
                 console.error(error);
@@ -42,7 +45,7 @@ export default function ApiUpload(props, handleBackClick) {
         <div className="modal-box relative">
             <button
                 id="datasource-modal-close"
-                onClick={props.handleBackClick}
+                onClick={handleBackClick}
                 className="btn btn-sm btn-circle absolute right-2 top-2"
             >
                 ✕
@@ -72,12 +75,12 @@ export default function ApiUpload(props, handleBackClick) {
                     onChange={handleKeyChange}
                     className="input input-bordered w-full mb-5"
                 />
-                    <button
-                        onClick={handleConnect}
-                        className="btn w-full flex-shrink-0 py-2 "
-                    >
-                        Connect
-                    </button>
+                <button
+                    onClick={handleConnect}
+                    className="btn w-full flex-shrink-0 py-2 "
+                >
+                    Connect
+                </button>
 
                 {status === 'Connected' && data !== null ? (
                     <>
@@ -103,18 +106,17 @@ export default function ApiUpload(props, handleBackClick) {
                             </div>
                         </div>
                         <button
-                        className="btn float-right mt-3"
-                        onClick={props.handleBackClick}
-                    >
-                        Save
-                    </button>
+                            className="btn float-right mt-3"
+                            onClick={() => onSubmit(apiData)}
+                        >
+                            Save
+                        </button>
                     </>
                 ) : (
                     status !== null && (
                         <ErrorAlert message="Error! Could not connect to API." />
                     )
                 )}
-                
             </div>
         </div>
     );

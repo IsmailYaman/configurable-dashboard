@@ -7,7 +7,6 @@ export default function DatasourceModal({ onSave, open, onClose }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showCsvUpload, setShowCsvUpload] = useState(false);
     const [showApiUpload, setShowApiUpload] = useState(false);
-    // console.log(open);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -45,7 +44,10 @@ export default function DatasourceModal({ onSave, open, onClose }) {
                 return showApiUpload ? (
                     <ApiUpload
                         handleBackClick={handleBackClick}
-                        onSubmit={() => {}}
+                        onSubmit={(ds) => {
+                            onSave(ds);
+                            onClose();
+                        }}
                     />
                 ) : (
                     <ErrorAlert message={'Something went wrong!'} />
@@ -53,7 +55,6 @@ export default function DatasourceModal({ onSave, open, onClose }) {
             default:
                 return (
                     <div className="modal-box relative">
-                        {/* <label htmlFor="datasource-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label> */}
                         <button
                             onClick={onClose}
                             htmlFor="datasource-modal"

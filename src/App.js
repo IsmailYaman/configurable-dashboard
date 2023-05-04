@@ -22,8 +22,13 @@ function App() {
     const [showPiechartModal, setShowPiechartModal] = useState(false);
     const [charts, setCharts] = useState([]);
     const [datasources, setDatasources] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([
+        'temperature',
+        'humidity',
+        'carbondioxide'
+    ]);
 
-    console.log('The data:', datasources);
+    // console.log(datasources);
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
@@ -45,15 +50,23 @@ function App() {
         backgroundColor = 'rgb(173, 173, 173, 0.4)';
     }
 
-    const renderChart = useCallback((element) => {
-        if (element.chartType === 'line') {
-            return <Linechart />;
-        } else if (element.chartType === 'bar') {
-            return <Barchart />;
-        } else if (element.chartType === 'pie') {
-            return <Piechart />;
-        }
-    }, []);
+    const renderChart = useCallback(
+        (element) => {
+            if (element.chartType === 'line') {
+                return (
+                    <Linechart
+                        datasources={datasources}
+                        selectedOptions={selectedOptions}
+                    />
+                );
+            } else if (element.chartType === 'bar') {
+                return <Barchart />;
+            } else if (element.chartType === 'pie') {
+                return <Piechart />;
+            }
+        },
+        [datasources, selectedOptions]
+    );
 
     const sidebarItems = [
         {
@@ -87,13 +100,15 @@ function App() {
                 className={
                     charts.length === 0
                         ? 'main-content w-screen h-screen'
-                        : 'main-content w-screen  p-6 grid grid-cols-12 gap-5'
+                        : 'main-content w-screen grid-flow-row-dense p-6 grid grid-cols-12 gap-5'
                 }
                 style={{ backgroundColor }}
             >
                 {charts.length === 0 ? <GridField /> : charts.map(renderChart)}
                 {showLinechartModal && (
                     <LinechartModal
+                        selectedOptions={selectedOptions}
+                        setSelectedOptions={setSelectedOptions}
                         onCreate={(element) =>
                             setCharts((elements) => [...elements, element])
                         }

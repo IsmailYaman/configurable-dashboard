@@ -5,7 +5,6 @@ import { SuccessAlert, ErrorAlert } from '../../global-components/Alert';
 export default function CsvUpload({ handleBackClick, onSubmit }) {
     const [csvData, setCsvData] = useState(null);
     const [alert, setAlert] = useState(null);
-    // const [submit, setSubmit] = useState(false);
 
     const handleCsvUpload = (e) => {
         const file = e.target.files[0];
