@@ -18,7 +18,6 @@ export default function CsvUpload({ handleBackClick, onSubmit }) {
             complete: function (results) {
                 console.log(results.data);
                 setCsvData(results.data);
-                // setSubmit(true);
                 setAlert({
                     type: 'success',
                     message: 'CSV file uploaded successfully'

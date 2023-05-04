@@ -22,13 +22,14 @@ function App() {
     const [showPiechartModal, setShowPiechartModal] = useState(false);
     const [charts, setCharts] = useState([]);
     const [datasources, setDatasources] = useState([]);
+    const [open, setOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([
         'temperature',
         'humidity',
         'carbondioxide'
     ]);
 
-    // console.log(datasources);
+    console.log(datasources);
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
@@ -109,6 +110,8 @@ function App() {
                     <LinechartModal
                         selectedOptions={selectedOptions}
                         setSelectedOptions={setSelectedOptions}
+                        open={open}
+                        onClose={() => setOpen(false)}
                         onCreate={(element) =>
                             setCharts((elements) => [...elements, element])
                         }

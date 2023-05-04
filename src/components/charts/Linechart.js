@@ -3,9 +3,7 @@ export default function Linechart({ datasources, selectedOptions }) {
     console.log('linechart', datasources);
     // const chartdata = datasources.map((item) => { //werkt (gedeeltelijk) met api alleen
     const chartdata = datasources[0].map((item) => {
-        //werkt met csv alleen
         return {
-            // timestamp wordt af en toe null, uitzoeken waarom
             timestamp: item.timestamp ? item.timestamp.toString() : '',
             temperature: item.temperature,
             humidity: item.humidity,
