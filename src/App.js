@@ -61,9 +61,19 @@ function App() {
                     />
                 );
             } else if (element.chartType === 'bar') {
-                return <Barchart />;
+                return (
+                    <Barchart
+                        datasources={datasources}
+                        selectedOptions={selectedOptions}
+                    />
+                );
             } else if (element.chartType === 'pie') {
-                return <Piechart />;
+                return (
+                    <Piechart
+                        datasources={datasources}
+                        selectedOptions={selectedOptions}
+                    />
+                );
             }
         },
         [datasources, selectedOptions]

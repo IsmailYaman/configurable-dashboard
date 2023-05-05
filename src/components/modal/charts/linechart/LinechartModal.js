@@ -59,6 +59,7 @@ export default function LineChartModal({
         onCreate(linechartData);
         // return linechartData;
     };
+
     return (
         <div>
             <>
@@ -84,7 +85,7 @@ export default function LineChartModal({
                                             </p>
                                             <input
                                                 type="text"
-                                                placeholder="New barchart"
+                                                placeholder="New linechart"
                                                 className="input input-bordered w-full max-w-xs"
                                                 value={title}
                                                 onChange={handleItemsChange}

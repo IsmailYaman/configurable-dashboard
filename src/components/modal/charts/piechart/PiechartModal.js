@@ -10,9 +10,6 @@ export default function PieChartModal({
     setSelectedOptions
 }) {
     const [activeButton, setActiveButton] = useState(0);
-    const [isTemperatureChecked, setIsTemperatureChecked] = useState(false);
-    const [isHumidityChecked, setIsHumidityChecked] = useState(false);
-    const [isCo2Checked, setIsCo2Checked] = useState(false);
     const [title, setTitle] = useState('New piechart');
 
     useEffect(() => {
@@ -20,11 +17,12 @@ export default function PieChartModal({
         modal.checked = true;
     }, []);
 
-    const handleItemsChange = (event) => {
-        setIsTemperatureChecked(!isTemperatureChecked);
-        setIsHumidityChecked(!isHumidityChecked);
-        setIsCo2Checked(!isCo2Checked);
-        setTitle(event.target.value);
+    const handleItemsChange = (type) => {
+        if (selectedOptions.indexOf(type) === -1) {
+            setSelectedOptions([...selectedOptions, type]);
+        } else {
+            setSelectedOptions(selectedOptions.filter((item) => item !== type));
+        }
     };
 
     const handleButtonClick = (buttonIndex) => {
@@ -37,9 +35,13 @@ export default function PieChartModal({
             title: title,
             chartType: 'pie',
             data: {
-                temperature: isTemperatureChecked,
-                humidity: isHumidityChecked,
-                carbondioxide: isCo2Checked
+                temperature: selectedOptions.some(
+                    (item) => item === 'temperature'
+                ),
+                humidity: selectedOptions.some((item) => item === 'humidity'),
+                carbondioxide: selectedOptions.some(
+                    (item) => item === 'carbondioxide'
+                )
             },
             timeRange:
                 activeButton === 0
@@ -104,12 +106,16 @@ export default function PieChartModal({
                                                     </span>
                                                     <input
                                                         type="checkbox"
-                                                        checked={
-                                                            isTemperatureChecked
-                                                        }
+                                                        checked={selectedOptions.some(
+                                                            (item) =>
+                                                                item ===
+                                                                'temperature'
+                                                        )}
                                                         className="checkbox"
-                                                        onChange={
-                                                            handleItemsChange
+                                                        onChange={() =>
+                                                            handleItemsChange(
+                                                                'temperature'
+                                                            )
                                                         }
                                                     />
                                                 </label>
@@ -119,12 +125,16 @@ export default function PieChartModal({
                                                     </span>
                                                     <input
                                                         type="checkbox"
-                                                        checked={
-                                                            isHumidityChecked
-                                                        }
+                                                        checked={selectedOptions.some(
+                                                            (item) =>
+                                                                item ===
+                                                                'humidity'
+                                                        )}
                                                         className="checkbox"
-                                                        onChange={
-                                                            handleItemsChange
+                                                        onChange={() =>
+                                                            handleItemsChange(
+                                                                'humidity'
+                                                            )
                                                         }
                                                     />
                                                 </label>
@@ -134,10 +144,16 @@ export default function PieChartModal({
                                                     </span>
                                                     <input
                                                         type="checkbox"
-                                                        checked={isCo2Checked}
+                                                        checked={selectedOptions.some(
+                                                            (item) =>
+                                                                item ===
+                                                                'carbondioxide'
+                                                        )}
                                                         className="checkbox"
-                                                        onChange={
-                                                            handleItemsChange
+                                                        onChange={() =>
+                                                            handleItemsChange(
+                                                                'carbondioxide'
+                                                            )
                                                         }
                                                     />
                                                 </label>

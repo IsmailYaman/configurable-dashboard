@@ -1,28 +1,17 @@
 import { Card, Title, BarChart } from '@tremor/react';
-export default function Barchart() {
-    const chartdata = [
-        {
-            year: 1951,
-            'Population growth rate': 1.74
-        },
-        {
-            year: 1952,
-            'Population growth rate': 1.93
-        },
-        {
-            year: 1953,
-            'Population growth rate': 1.9
-        },
-        {
-            year: 1954,
-            'Population growth rate': 1.98
-        },
-        {
-            year: 1955,
-            'Population growth rate': 2
-        }
-    ];
 
+export default function Barchart({ datasources, selectedOptions }) {
+    console.log('barchart', datasources);
+    // const chartdata = datasources.map((item) => { //werkt (gedeeltelijk) met api alleen
+    const chartdata = datasources.map((item) => {
+        return {
+            timestamp: item.timestamp ? item.timestamp.toString() : '',
+            temperature: item.temperature,
+            humidity: item.humidity,
+            carbondioxode: item.carbondioxide
+        };
+    });
+    console.log(selectedOptions);
     const dataFormatter = (number) =>
         `${Intl.NumberFormat('us').format(number).toString()}%`;
 
@@ -32,10 +21,10 @@ export default function Barchart() {
                 <Title>Population growth rate (1951 to 2021)</Title>
                 <BarChart
                     className="mt-6"
-                    data={chartdata}
-                    index="year"
-                    categories={['Population growth rate']}
-                    colors={['blue']}
+                    data={[...chartdata]}
+                    index={'timestamp'}
+                    categories={selectedOptions}
+                    colors={['red']}
                     valueFormatter={dataFormatter}
                     yAxisWidth={40}
                 />
