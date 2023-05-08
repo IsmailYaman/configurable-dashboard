@@ -51,6 +51,8 @@ function DraggableItems({
         ? 'opacity-30 cursor-grabbing'
         : 'opacity-100 cursor-grab';
     const disabledButton = datasources.length === 0 ? 'btn-disabled' : '';
+    const disablePiechart =
+        sidebarItems.type === 'piechart' ? 'btn-disabled' : '';
     return (
         <>
             {datasources.length === 0 ? (
@@ -60,7 +62,7 @@ function DraggableItems({
                 >
                     <li
                         ref={drag}
-                        className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 } ${disabledButton} ${opacity} `}
+                        className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 ${disabledButton} ${opacity} ${disablePiechart}`}
                     >
                         {children ? (
                             children
@@ -80,7 +82,7 @@ function DraggableItems({
             ) : (
                 <li
                     ref={drag}
-                    className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 } ${disabledButton} ${opacity} `}
+                    className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 ${disabledButton} ${opacity} ${disablePiechart}`}
                 >
                     {children ? (
                         children
