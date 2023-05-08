@@ -1,4 +1,4 @@
-#Ismail Kayadelen graduation assignment for [WeAreReasonablePeople](https://www.wearereasonablepeople.com/)
+# Ismail Kayadelen graduation assignment for [WeAreReasonablePeople](https://www.wearereasonablepeople.com/)
 
 ## To run the application use:
 ### `npm start`
