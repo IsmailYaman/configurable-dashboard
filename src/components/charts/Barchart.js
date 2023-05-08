@@ -2,15 +2,23 @@ import { Card, Title, BarChart } from '@tremor/react';
 
 export default function Barchart({ datasources, selectedOptions }) {
     console.log('barchart', datasources);
-    // const chartdata = datasources.map((item) => { //werkt (gedeeltelijk) met api alleen
-    const chartdata = datasources[0].map((item) => {
-        return {
-            timestamp: item.timestamp ? item.timestamp.toString() : '',
-            temperature: item.temperature,
-            humidity: item.humidity,
-            carbondioxode: item.carbondioxide
-        };
-    });
+    let chartdata = [];
+
+    if (datasources && datasources.length > 0 && datasources[0]) {
+        chartdata = datasources[0].map((item) => {
+            const date = new Date(item.timestamp);
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear().toString();
+            const formattedTimestamp = `${day}-${month}-${year}`;
+            return {
+                timestamp: formattedTimestamp,
+                temperature: item.temperature,
+                humidity: item.humidity,
+                carbondioxode: item.carbondioxide
+            };
+        });
+    }
     console.log(selectedOptions);
     const dataFormatter = (number) =>
         `${Intl.NumberFormat('us').format(number).toString()}%`;
