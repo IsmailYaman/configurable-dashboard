@@ -3,7 +3,7 @@ import { Card, Title, BarChart } from '@tremor/react';
 export default function Barchart({ datasources, selectedOptions }) {
     console.log('barchart', datasources);
     // const chartdata = datasources.map((item) => { //werkt (gedeeltelijk) met api alleen
-    const chartdata = datasources.map((item) => {
+    const chartdata = datasources[0].map((item) => {
         return {
             timestamp: item.timestamp ? item.timestamp.toString() : '',
             temperature: item.temperature,
