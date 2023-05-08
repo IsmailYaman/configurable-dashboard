@@ -100,6 +100,7 @@ function App() {
     return (
         <div className="flex">
             <Sidebar
+                datasources={datasources}
                 sidebarItems={sidebarItems}
                 setShowLinechartModal={setShowLinechartModal}
                 setShowBarchartModal={setShowBarchartModal}

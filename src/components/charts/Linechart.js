@@ -1,5 +1,6 @@
 import { Card, Title, LineChart } from '@tremor/react';
 import { ErrorAlert } from '../global-components/Alert';
+// import TimeFormatter from '../global-components/TimeFormatter';
 
 export default function Linechart({ datasources, selectedOptions }) {
     console.log('linechart', datasources);
@@ -7,8 +8,13 @@ export default function Linechart({ datasources, selectedOptions }) {
 
     if (datasources && datasources.length > 0 && datasources[0]) {
         chartdata = datasources[0].map((item) => {
+            const date = new Date(item.timestamp);
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear().toString();
+            const formattedTimestamp = `${day}-${month}-${year}`;
             return {
-                timestamp: item.timestamp ? item.timestamp.toString() : '',
+                timestamp: formattedTimestamp,
                 temperature: item.temperature,
                 humidity: item.humidity,
                 carbondioxode: item.carbondioxide
@@ -35,7 +41,7 @@ export default function Linechart({ datasources, selectedOptions }) {
                         data={[...chartdata]}
                         index={'timestamp'}
                         categories={selectedOptions}
-                        colors={['red']}
+                        colors={['red', 'blue', 'green']}
                         valueFormatter={dataFormatter}
                         yAxisWidth={40}
                     />

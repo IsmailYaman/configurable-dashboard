@@ -26,8 +26,10 @@ function DraggableItems({
     sidebarItems,
     setShowLinechartModal,
     setShowBarchartModal,
-    setShowPiechartModal
+    setShowPiechartModal,
+    datasources
 }) {
+    console.log(datasources);
     const [{ isDragging }, drag] = useDrag({
         type: data,
         end: (item, monitor) => {
@@ -49,24 +51,54 @@ function DraggableItems({
     const opacity = isDragging
         ? 'opacity-30 cursor-grabbing'
         : 'opacity-100 cursor-grab';
-
+    const disabledButton = datasources.length === 0 ? 'btn-disabled' : '';
     return (
-        <li
-            ref={drag}
-            className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 } ${opacity} `}
-        >
-            {children ? (
-                children
-            ) : (
-                <a
-                    href={sidebarItems.link}
-                    className="flex items-center p-2 space-x-3 rounded-md"
+        <>
+            {datasources.length === 0 ? (
+                <div
+                    className="tooltip tooltip-right tooltip-error"
+                    data-tip="Please select a datasource first."
                 >
-                    {sidebarItems.icon}
-                    <span className="text-gray-100">{sidebarItems.text}</span>
-                </a>
+                    <li
+                        ref={drag}
+                        className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 } ${disabledButton} ${opacity} `}
+                    >
+                        {children ? (
+                            children
+                        ) : (
+                            <a
+                                href={sidebarItems.link}
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                            >
+                                {sidebarItems.icon}
+                                <span className="text-gray-100">
+                                    {sidebarItems.text}
+                                </span>
+                            </a>
+                        )}
+                    </li>
+                </div>
+            ) : (
+                <li
+                    ref={drag}
+                    className={`rounded-sm bg-slate-600 bg-opacity-50 hover:bg-slate-500 hover:bg-opacity-20 } ${disabledButton} ${opacity} `}
+                >
+                    {children ? (
+                        children
+                    ) : (
+                        <a
+                            href={sidebarItems.link}
+                            className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                            {sidebarItems.icon}
+                            <span className="text-gray-100">
+                                {sidebarItems.text}
+                            </span>
+                        </a>
+                    )}
+                </li>
             )}
-        </li>
+        </>
     );
 }
 
@@ -75,7 +107,8 @@ export default function Sidebar({
     setShowLinechartModal,
     setShowBarchartModal,
     setShowPiechartModal,
-    onDatasourceSave
+    onDatasourceSave,
+    datasources
 }) {
     const [open, setOpen] = useState(false);
 
@@ -108,11 +141,12 @@ export default function Sidebar({
                             />
                         </li>
                     </ul>
-                    <hr className="mb-4 h-0.5 border-t-0 bg-slate-500 opacity-100 dark:opacity-50" />
+                    <hr className="mb-4 h-0.5 border-t-0 bg-slate-500 dark:opacity-50" />
                     <span className="pb-3 block">Widgets</span>
                     <ul className="grid  grid-cols-2 gap-2">
                         {sidebarItems.map((sidebarItem, index) => (
                             <DraggableItems
+                                datasources={datasources}
                                 key={index}
                                 type={{ name: sidebarItem.type }}
                                 data={sidebarItem.type}
