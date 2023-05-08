@@ -4,7 +4,6 @@ import { HiPlusSmall } from 'react-icons/hi2';
 import Tabs from '../../Tabs';
 
 export default function LineChartModal({
-    addLinechart,
     onCreate,
     selectedOptions,
     setSelectedOptions
@@ -12,7 +11,6 @@ export default function LineChartModal({
     const [activeButton, setActiveButton] = useState(0);
     const [title, setTitle] = useState('New linechart');
 
-    // const chartData = data[0].map((data) => data.temperature);
     useEffect(() => {
         const modal = document.getElementById('linechart-modal');
         modal.checked = true;
@@ -51,13 +49,8 @@ export default function LineChartModal({
                     ? 'week'
                     : 'month'
         };
-        // onAddDataPoint(linechartData);
-        console.log(linechartData);
-        addLinechart = true;
-        console.log(addLinechart);
         modal.checked = false;
         onCreate(linechartData);
-        // return linechartData;
     };
 
     return (

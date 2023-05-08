@@ -29,7 +29,6 @@ function DraggableItems({
     setShowPiechartModal,
     datasources
 }) {
-    console.log(datasources);
     const [{ isDragging }, drag] = useDrag({
         type: data,
         end: (item, monitor) => {
