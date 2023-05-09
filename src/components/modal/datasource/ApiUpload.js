@@ -85,14 +85,14 @@ export default function ApiUpload({ handleBackClick, onSubmit }) {
                 {status === 'Connected' && data !== null ? (
                     <>
                         <SuccessAlert message="API connection successful!" />
-                        <h2 className="text-lg font-medium mb-2 mt-4">
+                        {/* <h2 className="text-lg font-medium mb-2 mt-4">
                             Choose a name for your datasource
                         </h2>
                         <input
                             type="text"
                             placeholder="Choose a name"
                             className="input input-bordered w-full "
-                        />
+                        /> */}
                         <div>
                             <div className="mt-6 max-w-xl">
                                 <h2 className="text-lg font-medium mb-2">

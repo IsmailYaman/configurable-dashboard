@@ -60,14 +60,14 @@ export default function CsvUpload({ handleBackClick, onSubmit }) {
             )}
             {csvData && (
                 <div className="mt-6 max-w-xl">
-                    <h2 className="text-lg font-medium mb-2 mt-4">
+                    {/* <h2 className="text-lg font-medium mb-2 mt-4">
                         Choose a name for your datasource
                     </h2>
                     <input
                         type="text"
                         placeholder="Choose a name"
                         className="input input-bordered w-full "
-                    />
+                    /> */}
                     <h2 className="text-lg font-medium mb-2 mt-5">CSV Data</h2>
                     <div className="max-h-[400px] overflow-y-auto bg-gray-700 text-gray-100 p-4 rounded-md">
                         <pre className="text-sm">

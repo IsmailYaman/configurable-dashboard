@@ -24,7 +24,9 @@ export default function Linechart({ datasources, selectedOptions }) {
     }
 
     console.log(selectedOptions);
-
+    const formattedArray = selectedOptions
+        .map((str) => str.charAt(0).toUpperCase() + str.slice(1))
+        .join(', ');
     const dataFormatter = (number) =>
         `${Intl.NumberFormat('us').format(number).toString()}`;
 
@@ -32,7 +34,7 @@ export default function Linechart({ datasources, selectedOptions }) {
         <div className="lg:col-span-6 md:col-span-12">
             <Card>
                 {chartdata.length > 0 ? (
-                    <Title>{selectedOptions}</Title>
+                    <Title>{formattedArray}</Title>
                 ) : (
                     <Title>No data provided</Title>
                 )}

@@ -19,14 +19,18 @@ export default function Barchart({ datasources, selectedOptions }) {
             };
         });
     }
-    console.log(selectedOptions);
+
+    const formattedArray = selectedOptions
+        .map((str) => str.charAt(0).toUpperCase() + str.slice(1))
+        .join(', ');
+
     const dataFormatter = (number) =>
         `${Intl.NumberFormat('us').format(number).toString()}%`;
 
     return (
         <div className="lg:col-span-6 sm:col-span-12 ">
             <Card>
-                <Title>Population growth rate (1951 to 2021)</Title>
+                <Title>{formattedArray}</Title>
                 <BarChart
                     className="mt-6"
                     data={[...chartdata]}
